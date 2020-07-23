@@ -15,33 +15,25 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
-
     <!-- FontAwesome CSS -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('css') }}/{{Session::get('theme') }}">
     <!-- ElegantFonts CSS -->
     <link rel="stylesheet" href="{{ asset('css/datepicker.min.css') }}">
-
     <!-- themify-icons CSS -->
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
-
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
-
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('vendor/OwlCarousel/assets/owl.carousel.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/OwlCarousel/assets/owl.theme.default.min.css') }}">
-
 </head>
 
 <body>
-
     @include('theme.header')
-    <main>
-        @yield('content')
-    </main>
+    @yield('content')
     @include('theme.footer')
     <script type='text/javascript' src="{{ asset('js/jquery.min.js') }}"></script>
+    <script type='text/javascript' src="{{ asset('js/popper.min.js') }}"></script>
     <script type='text/javascript' src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script type='text/javascript' src="{{ asset('js/jquery.nice-select.js') }}"></script>
     <script type='text/javascript' src="{{ asset('js/datepicker.min.js') }}"></script>
@@ -49,8 +41,7 @@
     <script type='text/javascript' src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script type='text/javascript' src="{{ asset('vendor/OwlCarousel/owl.carousel.js') }}"></script>
     <script type='text/javascript' src="{{ asset('js/custom1.js') }}"></script>
-
-
+    <script type='text/javascript' src="{{ asset('js/theme.js') }}"></script>
 </body>
 
 </html>

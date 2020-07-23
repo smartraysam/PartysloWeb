@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,16 +16,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    if (!Session::has('theme')) {
+        Session::put('theme',  "stylelight.css");
+    }
     return view('index');
 });
+
+Route::get('/settheme',  'HomeController@settheme');
 
 Route::get('/about', function () {
     return view('about');
 });
-Route::get('/categories', function () {
-    return view('categories');
+Route::get('/category', function () {
+    return view('category');
 });
-Route::get('/contact', function () {
+Route::get('/contact_us', function () {
     return view('contact');
 });
 
@@ -47,7 +54,7 @@ Route::get('/search', function () {
 
 
 Route::get('/term_conditions', function () {
-    return view('term_conditions');
+    return view('term_condition');
 });
 
 
@@ -56,6 +63,6 @@ Route::get('/dashboard', function () {
 });
 
 
-Auth::routes();
 
+Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
