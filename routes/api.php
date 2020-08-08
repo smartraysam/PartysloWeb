@@ -17,3 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+Route::post('/load_Djlist', 'ApiController@DJListsApI');
+
+Route::post('/encrypt', 'DjlistController@encryptthis');
+
+Route::post('/decrypt', 'DjlistController@decryptthis');
+
+Route::post('/testdecrypt', 'DjlistController@testdecrypt');
+Route::post('/testencrypt', 'DjlistController@testencrypt');
+Route::post('/hex2base64', 'DjlistController@hexbase64');

@@ -163,7 +163,7 @@
                                             <div class="event-main-post">
                                                 <div class="event-top">
                                                     <div class="event-top-left">
-                                                        <a href="event_detail_view.html">
+                                                        <a href="/event">
                                                             <h4>Event Title Here</h4>
                                                         </a>
                                                     </div>
@@ -175,8 +175,8 @@
                                                                     class="fas fa-ellipsis-v"></i></span>
                                                             <div class="dropdown-menu post-rt-dropdown dropdown-menu-right">
                                                                 <a class="post-link-item" href="#">Hide</a>
-                                                                <a class="post-link-item" href="#">Details</a>
-                                                                <a class="post-link-item" href="#">User Profile</a>
+                                                                <a class="post-link-item" href="/event">Details</a>
+                                                                <a class="post-link-item" href="/user">User Profile</a>
                                                                 <a class="post-link-item" href="#">Report</a>
                                                             </div>
                                                         </div>
@@ -190,7 +190,7 @@
                                                             <div class="left-buttons">
                                                                 <ul class="main-btns">
                                                                     <li><button class="main-btn-link"
-                                                                            onclick="window.location.href = '#';">Buy
+                                                                            onclick="window.location.href = '/buyticket';">Buy
                                                                             Ticket</button></li>
                                                                     <li><button class="main-btn-link btn-hide"
                                                                             onclick="window.location.href = '#';">May

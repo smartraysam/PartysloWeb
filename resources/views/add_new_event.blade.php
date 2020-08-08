@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <ol class="title-bar-text">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>							
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>							
                     <li class="breadcrumb-item active" aria-current="page">Add New Event</li>
                 </ol>
             </div>		
@@ -57,11 +57,34 @@
                                     <i class="fas fa-info-circle"></i>
                                     <h6>Event Details*</h6>
                                 </div>
-                                <div class="add-input-items">										
+                                <div class="add-input-items">
+                                    <div class="add-evnt-dt">											
+                                        <div class="row">											
+                                            <div class="col">											
+                                                <div class="select-bg mt-20">									
+                                                    <select class="wide" style="display: none;">
+                                                        <option>Event Category</option>	
+                                                        <option>Music</option>																																
+                                                        <option>Festival</option>																																
+                                                        <option>Theater</option>																																
+                                                        <option>Club</option>																																																																																																																																																																				
+                                                        <option>Comedy</option>																																																																																																																																																																				
+                                                        <option>Sports</option>																																																																																																																																																																				
+                                                        <option>Art</option>																																																																																																																																																																				
+                                                        <option>Promotions</option>																																																																																																																																																																																																																																																																																																																																					
+                                                        <option>Others</option>																																																																																																																																																																																																																																																																																																																																																					
+                                                    </select>
+                                                </div>																					
+                                            </div>
+                                          
+                                        </div>
+                                    </div>										
                                     <div class="add-evnt-dt">										
                                         <input class="add-inputs" type="text" placeholder="Search City">
                                         <i class="fas fa-search ev-icon"></i>
                                     </div>
+                                     
+                                    
                                     <div class="add-evnt-dt">										
                                         <input class="add-date-input datepicker-here" data-language="en" type="text" placeholder="Select Date">
                                         <i class="fas fa-calendar-alt dte-icon"></i>
@@ -236,6 +259,20 @@
                                         </div>
                                     </div>
                                 </div>									
+                            </div>
+                            <div class="input-section-item">
+                                <div class="add-input-title">								
+                                    <i class="fas fa-check-square"></i>
+                                    <h6>Featuring DJ*</h6>
+                                </div>
+                                <div class="add-input-items">										
+                                    <div class="add-evnt-dt">										
+                                        <input class="add-inputs" type="text" placeholder="Search DJ">
+                                        <i class="fas fa-search ev-icon"></i>
+                                    </div>
+                                  
+                                </div>
+                             									
                             </div>
                             <div class="input-section-item">
                                 <div class="add-input-title">								

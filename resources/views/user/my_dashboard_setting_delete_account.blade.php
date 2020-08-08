@@ -1,4 +1,6 @@
-@extends('layouts.app') @section('title', 'Partyslo / Dashboard') @section('content')
+@extends('layouts.app')
+@section('title', 'Partyslo / Dashboard') 
+@section('content')
 <main class="dashboard-mp">
     <div class="dash-todo-thumbnail-area1">
         <div class="todo-thumb1 dash-bg-image1 dash-bg-overlay" style="background-image:url(images/event-view/my-bg.jpg);"></div>
@@ -85,72 +87,68 @@
                             <a class="nav-link" href="my_dashboard_booked_events.html">Booked Events</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="my_dashboard_history.html">History</a>
+                            <a class="nav-link" href="my_dashboard_history.html">History</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="my_dashboard_setting_info.html">Setting</a>
+                            <a class="nav-link active" href="my_dashboard_setting_info.html">Setting</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="booked-events mb-20">
+            <div class="setting-page mb-20">
                 <div class="row">
-                    <div class="col-lg-12 col-md-12">
-                        <div class="checkout-heading">
-                            <h2>History</h2>
+                    <div class="col-lg-3 col-md-5">
+                        <div class="user-data full-width">
+                            <div class="categories-left-heading">
+                                <h3>Your Details</h3>
+                            </div>
+                            <div class="categories-items">
+                                <a class="tab-item-1" href="my_dashboard_setting_info.html">Personal Info</a>
+                                <a class="tab-item-1" href="my_dashboard_setting_profile.html">Profile</a>
+                                <a class="tab-item-1" href="my_dashboard_all_requests.html">All Friend Requests</a>
+                                <a class="tab-item-1" href="my_dashboard_all_notifications.html">All Notifications</a>
+                                <a class="tab-item-1" href="my_dashboard_setting_social.html">Social Networks</a>
+                                <a class="tab-item-1" href="my_dashboard_setting_email.html">Email Setting</a>
+                                <a class="tab-item-1" href="my_dashboard_setting_notification.html">Notification Setting</a>
+                                <a class="tab-item-1" href="my_dashboard_setting_change_pass.html">Change Password</a>
+                                <a class="tab-item-1 active" href="my_dashboard_setting_delete_account.html">Deactivate Account</a>
+                            </div>
                         </div>
-                        <div class="table-responsive table-brder">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" style="font-size:16px; font-weight:500;">Event</th>
-                                        <th scope="col" style="font-size:16px; font-weight:500;">Tickets Qty</th>
-                                        <th scope="col" style="font-size:16px; font-weight:500;">Category</th>
-                                        <th scope="col" style="font-size:16px; font-weight:500;">Bill Slip</th>
-                                        <th scope="col" style="font-size:16px; font-weight:500;">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="checkout-dt">
-                                                <div class="check-img">
-                                                    <img src="images/event-view/checkout-img.jpg" alt="">
+                    </div>
+                    <div class="col-lg-9 col-md-7">
+                        <div class="setting-form">
+                            <form>
+                                <div class="user-data full-width">
+                                    <div class="about-left-heading">
+                                        <h3>Deactivate Account</h3>
+                                    </div>
+                                    <div class="prsnl-info">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-12">
+                                                <div class="form-group">
+                                                    <label>Email*</label>
+                                                    <input class="payment-input" type="email" placeholder="Enter Email Address">
                                                 </div>
-                                                <div class="evnt-dt-ckot">
-                                                    <div class="chk-heading">Event Title Goes Here</div>
-                                                    <div class="ctgory">Club</div>
-                                                    <div class="date-tme">Friday, 23 Dec 2019 | 2.00 PM to 9.00 PM</div>
-                                                    <div class="lctn-dt"><i class="fas fa-map-marker-alt"></i> India</div>
+                                                <div class="form-group">
+                                                    <label>Password*</label>
+                                                    <input class="payment-input" type="Password" placeholder="Enter Password">
                                                 </div>
                                             </div>
-                                        </th>
-                                        <td>1</td>
-                                        <td>VIP</td>
-                                        <td><a href="#" style="color:#313131;">Download</a></td>
-                                        <td>Closed</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="checkout-dt">
-                                                <div class="check-img">
-                                                    <img src="images/event-view/checkout-img2.jpg" alt="">
-                                                </div>
-                                                <div class="evnt-dt-ckot">
-                                                    <div class="chk-heading">Event Title Goes Here</div>
-                                                    <div class="ctgory">Club</div>
-                                                    <div class="date-tme">Sunday, 10 Dec 2019 | 2.00 PM to 9.00 PM</div>
-                                                    <div class="lctn-dt"><i class="fas fa-map-marker-alt"></i> India</div>
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="form-group">
+                                                    <label>Description Here*</label>
+                                                    <textarea class="replt-comnt" placeholder="Description"></textarea>
                                                 </div>
                                             </div>
-                                        </th>
-                                        <td>1</td>
-                                        <td>VIP</td>
-                                        <td><a href="#" style="color:#313131;">Download</a></td>
-                                        <td>Closed</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="add-profile-btn">
+                                                    <button class="setting-save-btn" type="submit">Deactivate Account</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
