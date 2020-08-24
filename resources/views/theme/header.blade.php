@@ -3,14 +3,17 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <nav class="navbar navbar-expand-lg navbar-light bg-dark1 justify-content-sm-start">
-                    <a class="order-1 order-lg-0 ml-lg-0 ml-3 mr-auto" href="/"><img src="images/logo.svg" alt=""></a>
+                    <a class="order-1 order-lg-0 ml-lg-0 ml-3 mr-auto"
+                        style=" position: relative; color: white;  text-shadow: 2px 2px gray; font-family:  Arial, Helvetica, sans-serif;  font-weight: bold; font-size: 20px;"
+                        href="/"><img style="margin-right:8px; margin-bottom:5px" src="images/app.png"
+                            alt="">Partyslo</a>
                     <button class="navbar-toggler align-self-start" type="button">
                         <i class="fas fa-bars"></i>
                     </button>
                     <div class="collapse navbar-collapse d-flex flex-column flex-lg-row flex-xl-row justify-content-lg-end bg-dark1 p-3 p-lg-0 mt1-5 mt-lg-0 mobileMenu"
                         id="navbarSupportedContent">
                         <ul class="navbar-nav align-self-stretch">
-                            @if(Request::is('/'))
+                            @if (Request::is('/'))
                                 <li class="nav-item active">
                                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                                 </li>
@@ -20,9 +23,10 @@
                                 </li>
                             @endif
 
-                            @if(Request::is('category'))
+                            @if (Request::is('category'))
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="/category">Category <span class="sr-only">(current)</span></a>
+                                    <a class="nav-link" href="/category">Category <span
+                                            class="sr-only">(current)</span></a>
                                 </li>
                             @else
                                 <li class="nav-item">
@@ -31,7 +35,7 @@
                             @endif
 
 
-                            @if(Request::is('about'))
+                            @if (Request::is('about'))
                                 <li class="nav-item active">
                                     <a class="nav-link" href="/about">About <span class="sr-only">(current)</span></a>
                                 </li>
@@ -40,7 +44,7 @@
                                     <a class="nav-link" href="/about">About</a>
                                 </li>
                             @endif
-                            @if(Request::is('contact_us'))
+                            @if (Request::is('contact_us'))
                                 <li class="nav-item active">
                                     <a class="nav-link" href="/contact_us">Contact <span
                                             class="sr-only">(current)</span></a>
@@ -202,7 +206,7 @@
                                 <i class="fas fa-angle-down"></i>
                             </a>
                             <div class="dropdown-menu account-dropdown dropdown-menu-right">
-                                @if(Request::is('login'))
+                                @if (Request::is('login'))
                                     <a class="nav-link active" href="{{ route('login') }}">{{ __('Login') }} <span
                                             class="sr-only">(current)</span></a>
 
@@ -211,13 +215,13 @@
 
                                 @endif
 
-                                @if(Request::is('register'))
-                                    @if(Route::has('register'))
+                                @if (Request::is('register'))
+                                    @if (Route::has('register'))
                                         <a class="nav-link active" href="{{ route('register') }}">{{ __('Register') }} <span
                                                 class="sr-only">(current)</span></a>
                                     @endif
                                 @else
-                                    @if(Route::has('register'))
+                                    @if (Route::has('register'))
                                         <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                     @endif
                                 @endif
@@ -231,7 +235,7 @@
                         <div class="account order-1 dropdown">
                             <a href="#" class="account-link dropdown-toggle-no-caret" role="button" data-toggle="dropdown">
                                 <div class="user-dp"><img src="images/dp.jpg" alt=""></div>
-                                <span>Hi! {{ Auth::user()->name }} </span>
+                                <span>Hi! {{ explode(' ', Auth::user()->name)[0] }} </span>
                                 <i class="fas fa-angle-down"></i>
                             </a>
                             <div class="dropdown-menu account-dropdown dropdown-menu-right">
@@ -243,7 +247,7 @@
                                 <a class="link-item" href="invite.html">Invite</a>
                                 <a class="link-item" href="my_dashboard_setting_info.html">Setting</a>
                                 <a class="link-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
+                                                document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
 

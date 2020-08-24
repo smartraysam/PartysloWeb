@@ -15,7 +15,8 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('title');
+            $table->string('owner');
             $table->string('djlist_id');
             $table->string('description');
             $table->string('ticketfee');
@@ -24,9 +25,12 @@ class CreateEventsTable extends Migration
             $table->string('end_date');
             $table->string('start_time');
             $table->string('end_time');
-            $table->string('location');
+            $table->string('venuetype');
+            $table->string('address');
+            $table->double('address_latitude')->nullable();
+            $table->double('address_longitude')->nullable();
             $table->string('image');
-            $table->string('owner');
+            $table->string('organizers');
             $table->timestamps();
         });
     }

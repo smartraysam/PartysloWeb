@@ -13,8 +13,12 @@
                                         <div class="col-lg-6">
                                             <div class="lg-left">
                                                 <div class="lg-logo">
-                                                    <a href="index.html"><img src="images/login-register/logo.svg"
-                                                            alt=""></a>
+                                                    <a class="order-1 order-lg-0 ml-lg-0 ml-3 mr-auto"
+                                                        style=" position: relative; color: white;  
+                                                        text-shadow: 2px 2px gray; font-family:  Arial, Helvetica, sans-serif;  font-weight: bold; font-size: 20px;"
+                                                        href="/"><img style="margin-right:8px; margin-bottom:5px"
+                                                            src="images/app.png" alt="">Partyslo</a>
+
                                                 </div>
                                                 <div class="lr-text">
                                                     <h2>Register Now</h2>

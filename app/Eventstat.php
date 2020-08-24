@@ -4,9 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Djlist extends Model
+class Eventstat extends Model
 {
-    protected $table = 'djlists';
-    //
+    protected $table = "eventstats";
     protected $guarded = [];
 }

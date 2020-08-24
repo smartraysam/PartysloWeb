@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Djlist;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
@@ -12,17 +13,33 @@ class ApiController extends Controller
 
     }
 
-    public function DJListsApI(Request $requuest)
+    public function DJListsApI(Request $request)
     {
-        return Djlist::create([
-            'name' => $requuest->name,
-            'link' => $requuest->link,
-            'follower' => $requuest->follower,
-            'genre' => $requuest->genre,
-            'music' => $requuest->music,
-            'social' => $requuest->social,
-            'location' => $requuest->location,
-        ]);
+        $page = (object) $request->page;
+        $checkDJ = Djlist::where("name", $request->name)->first();
+        if ($checkDJ) {
+            return response()->json("DJ exist", 202);
+        }
+        if ($page) {
+            $social = $page->social;
+            $location = $page->location;
+            $genre = $request->genre;
+
+            $djinfo = Djlist::create([
+                'name' => $request->name,
+                'link' => $request->link,
+                'follower' => $request->follower,
+                'genre' => json_encode($genre),
+                'music' => $page->music,
+                'social' => json_encode($social),
+                'location' => json_encode($location),
+            ]);
+
+            $djinfo->save();
+            return response()->json("Insert successfull", 200);
+        } else {
+            return response()->json("Error", 201);
+        }
 
     }
 

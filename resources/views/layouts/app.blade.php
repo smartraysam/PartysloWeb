@@ -16,7 +16,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
     <!-- FontAwesome CSS -->
-    <link rel="stylesheet" href="{{ asset('css') }}/{{Session::get('theme') }}">
+    <link rel="stylesheet" href="{{ asset('css') }}/{{ Session::get('theme') }}">
     <!-- ElegantFonts CSS -->
     <link rel="stylesheet" href="{{ asset('css/datepicker.min.css') }}">
     <!-- themify-icons CSS -->
@@ -26,12 +26,16 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('vendor/OwlCarousel/assets/owl.carousel.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/OwlCarousel/assets/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-tagsinput/tagsinput.css') }}">
+
+
 </head>
 
 <body>
     @include('theme.header')
     @yield('content')
     @include('theme.footer')
+    @yield('scripts')
     <script type='text/javascript' src="{{ asset('js/jquery.min.js') }}"></script>
     <script type='text/javascript' src="{{ asset('js/popper.min.js') }}"></script>
     <script type='text/javascript' src="{{ asset('js/bootstrap.min.js') }}"></script>

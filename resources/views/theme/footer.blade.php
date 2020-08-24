@@ -15,7 +15,7 @@
                 <div class="footer-right">
                     <ul class="copyright-text">
                         <li>
-                            <a href="/"><img src="images/logo-2.svg" alt=""></a>
+                            <a href="/"><img src="images/app.png" alt=""></a>
                         </li>
                         <li>
                             <div class="ftr-1"><i class="far fa-copyright"></i> <?php echo date("Y"); ?> Partyslo. All

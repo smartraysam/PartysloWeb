@@ -43,9 +43,7 @@ Route::get('/privacy_policy', function () {
     return view('privacy_policy');
 });
 
-Route::get('/add_new_event', function () {
-    return view('add_new_event');
-});
+Route::get('/add_new_event', 'EventController@create')->name('add_event')->middleware('auth');
 
 Route::get('/search', function () {
     return view('search_view');
@@ -64,13 +62,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/event', 'HomeController@viewEvent')->name('event');
 
+Route::post('/save_event', 'EventController@store')->name('saveevent')->middleware('auth');
+
+
 Route::get('/buyticket', 'HomeController@buyTicket')->name('buyticket');
 Route::get('/checkout', 'HomeController@checkout')->name('checkout');
 Route::get('/confirmpay', 'HomeController@confirmPay')->name('confirmPay');
 
-
-
 Route::get('/user', 'HomeController@getEventOwner')->name('user');
-
 
 Route::get('/settheme', 'SettingsController@settheme');
