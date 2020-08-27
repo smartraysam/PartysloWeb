@@ -15,6 +15,7 @@ class ApiController extends Controller
 
     public function DJListsApI(Request $request)
     {
+        // \Log::info($request);
         $page = (object) $request->page;
         $checkDJ = Djlist::where("name", $request->name)->first();
         if ($checkDJ) {

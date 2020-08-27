@@ -301,7 +301,8 @@
                                     </div>
                                     <div class="add-input-items">
                                         <div class="add-evnt-dt">
-                                            <input class="add-inputs" type="text" placeholder="Search DJ" name="dj" autocomplete="off">
+                                            <input class="typeahead add-inputs" type="text" placeholder="Search DJ"
+                                                name="dj" autocomplete="off">
                                             <i class="fas fa-search ev-icon"></i>
                                         </div>
 
@@ -354,6 +355,8 @@
     @parent
     <script type='text/javascript' src="{{ asset('js/jquery.min.js') }}"></script>
     <script type='text/javascript' src="{{ asset('vendor/bootstrap-tagsinput/tagsinput.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('js/bootstrap3-typeahead.min.js') }}"></script>
     <script
         src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDHpSFafpkDUWTgk0tWXZXqTAISMOHoCEs&libraries=places&callback=initialize"
         async defer></script>
@@ -372,6 +375,21 @@
         }
         $("#file").change(function() {
             readURL(this);
+        });
+        $("input.typeahead").typeahead({
+            source: function(query, process) {
+                return $.get(
+                    "/autocomplete", {
+                        query: query
+                    },
+                    function(data) {
+                        return process(data);
+                    }
+                );
+            },
+            updater: function(item) {
+                return item;
+            }
         });
 
     </script>

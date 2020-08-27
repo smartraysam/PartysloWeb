@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Event;
-use Illuminate\Http\Request;
-use App\Traits\UploadTrait;
 use App\Djlist;
+use App\Event;
+use App\Traits\UploadTrait;
+use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
@@ -29,6 +29,14 @@ class EventController extends Controller
     public function create()
     {
         return view('add_new_event');
+    }
+    public function autocomplete(Request $request)
+    {
+        $str = $request->get('query');
+        $data = Djlist::select("name")
+                ->where('name', 'LIKE', '%' . $str . '%')
+                ->get();
+        return response()->json($data);
     }
 
     public function uploadImage($request)
