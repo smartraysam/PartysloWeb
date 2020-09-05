@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Djlist;
 use App\Event;
+use App\Eventstat;
 use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
 
@@ -16,9 +18,15 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $events = Event::join('eventstats', 'eventstats.event_id', "events.id")->paginate(8);
+        if ($request->ajax()) {
+            return response()->json($events);
+        }
+
+
     }
 
     /**
@@ -34,8 +42,8 @@ class EventController extends Controller
     {
         $str = $request->get('query');
         $data = Djlist::select("name")
-                ->where('name', 'LIKE', '%' . $str . '%')
-                ->get();
+            ->where('name', 'LIKE', '%' . $str . '%')
+            ->get();
         return response()->json($data);
     }
 
@@ -96,6 +104,10 @@ class EventController extends Controller
 
         ]);
         $event->save();
+        $eventstat = Eventstat::create([
+            'event_id' => $event->id,
+        ]);
+        $eventstat->save();
         return redirect()->back()->with('status', 'Operation Successfully!');
     }
 
@@ -107,7 +119,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+
     }
 
     /**
@@ -143,4 +155,14 @@ class EventController extends Controller
     {
         //
     }
+
+    public function categorysearchcomplete(Request $request)
+    {
+        $str = $request->get('query');
+        $data = Category::select("name")
+            ->where('name', 'LIKE', '%' . $str . '%')
+            ->get();
+        return response()->json($data);
+    }
+
 }

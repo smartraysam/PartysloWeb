@@ -44,6 +44,7 @@
     <script type='text/javascript' src="{{ asset('js/i18n/datepicker.en.js') }}"></script>
     <script type='text/javascript' src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script type='text/javascript' src="{{ asset('vendor/OwlCarousel/owl.carousel.js') }}"></script>
+    
     <script type='text/javascript' src="{{ asset('js/custom1.js') }}"></script>
     <script type='text/javascript' src="{{ asset('js/theme.js') }}"></script>
 </body>

@@ -10,7 +10,30 @@ class ApiController extends Controller
 
     public function FacebookEventAPI(Request $request)
     {
+        $event = Event::create([
+            'title' => $request->title,
+            'owner' => "0",
+            'djlist_id' => $dj_id,
+            'description' => $request->description,
+            'ticketfee' => $request->ticket,
+            'category' => $request->category,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
+            'venuetype' => $request->venuetype,
+            'address' => $request->address,
+            'address_latitude' => $request->address_latitude,
+            'address_longitude' => $request->address_longitude,
+            'image' => $imagelink,
+            'organizers' => $request->organizers,
 
+        ]);
+        $event->save();
+        $eventstat = Eventstat::create([
+            'event_id' => $event->id,
+        ]);
+        $eventstat->save();
     }
 
     public function DJListsApI(Request $request)

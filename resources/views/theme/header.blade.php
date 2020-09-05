@@ -61,9 +61,9 @@
                     <ul class="group-icons">
                         <li><a href="/search" class="icon-set"><i class="fas fa-search"></i></a></li>
                         <li class="post-dt-dropdown dropdown">
-                            <span class="dropdown-toggle-no-caret" role="button" data-toggle="dropdown"><i
-                                    class="fas fa-adjust"></i></span>
-                            <div class="dropdown-menu post-rt-dropdown dropdown-menu-left">
+                            <span class="dropdown-toggle-no-caret" role="button" data-toggle="collapse"
+                                data-target="#themeDropdown"><i class="fas fa-adjust"></i></span>
+                            <div class="dropdown-menu post-rt-dropdown dropdown-menu-left" id="themeDropdown">
                                 <a class="post-link-item" href="#" id="light">Light Theme</a>
                                 <a class="post-link-item" href="#" id="dark">Dark Theme</a>
                             </div>
@@ -71,10 +71,11 @@
                         @guest
                         @else
                             <li class="dropdown">
-                                <a href="#" class="icon-set dropdown-toggle-no-caret" role="button" data-toggle="dropdown">
+                                <a href="#" class="icon-set dropdown-toggle-no-caret" role="button" data-toggle="collapse"
+                                    data-target="#requestDropdown">
                                     <i class="fas fa-user-plus"></i>
                                 </a>
-                                <div class="dropdown-menu user-request-dropdown dropdown-menu-right">
+                                <div class="dropdown-menu user-request-dropdown dropdown-menu-right" id="requestDropdown">
                                     <div class="user-request-list">
                                         <div class="request-users">
                                             <div class="user-request-dt">
@@ -109,10 +110,11 @@
                                 </div>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="icon-set dropdown-toggle-no-caret" role="button" data-toggle="dropdown">
+                                <a href="#" class="icon-set dropdown-toggle-no-caret" role="button" data-toggle="collapse"
+                                    data-target="#msgDropdown">
                                     <i class="fas fa-envelope"></i>
                                 </a>
-                                <div class="dropdown-menu message-dropdown dropdown-menu-right">
+                                <div class="dropdown-menu message-dropdown dropdown-menu-right" id="msgDropdown">
                                     <div class="user-request-list">
                                         <div class="request-users">
                                             <div class="user-request-dt">
@@ -152,10 +154,11 @@
                                 </div>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="icon-set dropdown-toggle-no-caret" role="button" data-toggle="dropdown">
+                                <a href="#" class="icon-set dropdown-toggle-no-caret" role="button" data-toggle="collapse"
+                                    data-target="#notifyDropdown">
                                     <i class="fas fa-bell"></i>
                                 </a>
-                                <div class="dropdown-menu notification-dropdown dropdown-menu-right">
+                                <div class="dropdown-menu notification-dropdown dropdown-menu-right" id="notifyDropdown">
                                     <div class="user-request-list">
                                         <div class="request-users">
                                             <div class="user-request-dt">
@@ -200,12 +203,13 @@
                     @guest
 
                         <div class="account order-1 dropdown active">
-                            <a href="#" class="account-link dropdown-toggle-no-caret" role="button" data-toggle="dropdown">
+                            <a href="#" class="account-link dropdown-toggle-no-caret" role="button" data-toggle="collapse"
+                                data-target="#guestDropdown">
                                 <div class="user-dp"> <img src="images/guest.png" alt=""></div>
                                 <span>Hi! Guest </span>
                                 <i class="fas fa-angle-down"></i>
                             </a>
-                            <div class="dropdown-menu account-dropdown dropdown-menu-right">
+                            <div class="dropdown-menu account-dropdown dropdown-menu-right" id="guestDropdown">
                                 @if (Request::is('login'))
                                     <a class="nav-link active" href="{{ route('login') }}">{{ __('Login') }} <span
                                             class="sr-only">(current)</span></a>
@@ -233,12 +237,13 @@
 
                     @else
                         <div class="account order-1 dropdown">
-                            <a href="#" class="account-link dropdown-toggle-no-caret" role="button" data-toggle="dropdown">
+                            <a href="#" class="account-link dropdown-toggle-no-caret" role="button" data-toggle="collapse"
+                                data-target="#userDropdown">
                                 <div class="user-dp"><img src="images/dp.jpg" alt=""></div>
                                 <span>Hi! {{ explode(' ', Auth::user()->name)[0] }} </span>
                                 <i class="fas fa-angle-down"></i>
                             </a>
-                            <div class="dropdown-menu account-dropdown dropdown-menu-right">
+                            <div class="dropdown-menu account-dropdown dropdown-menu-right" id="userDropdown">
                                 <a class="link-item" href="my_dashboard_activity.html">Profile</a>
                                 <a class="link-item" href="my_dashboard_messages.html">Messages</a>
                                 <a class="link-item" href="my_dashboard_booked_events.html">Booked Events</a>
@@ -247,7 +252,7 @@
                                 <a class="link-item" href="invite.html">Invite</a>
                                 <a class="link-item" href="my_dashboard_setting_info.html">Setting</a>
                                 <a class="link-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
+                                                    document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
 

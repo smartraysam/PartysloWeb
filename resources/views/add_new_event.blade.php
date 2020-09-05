@@ -226,59 +226,9 @@
                                 <div class="input-section-item">
                                     <div class="add-input-title">
                                         <i class="fas fa-check-square"></i>
-                                        <h6>Event Venue and Seats*</h6>
+                                        <h6>Event Venue*</h6>
                                     </div>
                                     <div class="add-input-items">
-
-                                        <div class="add-evnt-dt">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="select-bg mt-20">
-                                                        <select class="wide" style="display: none;" name="venuetype">
-                                                            <option>Venue Type</option>
-                                                            <option>Arena</option>
-                                                            <option>Stadium</option>
-                                                            <option>Theater</option>
-                                                            <option>Performing Arts Facility</option>
-                                                            <option>Convention / Exhibition Center</option>
-                                                            <option>Conference Center</option>
-                                                            <option>Multi-Purpose Venue</option>
-                                                            <option>Club / Concert Venue</option>
-                                                            <option>Non-Venue</option>
-                                                            <option>Other</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="select-bg mt-20">
-                                                        <select class="wide" style="display: none;" name="seat">
-                                                            <option>Select Total Seats</option>
-                                                            <option>50</option>
-                                                            <option>100</option>
-                                                            <option>150</option>
-                                                            <option>200</option>
-                                                            <option>250</option>
-                                                            <option>300</option>
-                                                            <option>350</option>
-                                                            <option>400</option>
-                                                            <option>450</option>
-                                                            <option>500</option>
-                                                            <option>550</option>
-                                                            <option>600</option>
-                                                            <option>650</option>
-                                                            <option>700</option>
-                                                            <option>750</option>
-                                                            <option>800</option>
-                                                            <option>850</option>
-                                                            <option>900</option>
-                                                            <option>950</option>
-                                                            <option>1000</option>
-                                                            <option>1050</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="add-evnt-dt" style="margin-bottom: 10px">
                                             <input class="add-inputs  map-input" type="text" placeholder="Search City"
                                                 id="address-input" name="address" autocomplete="off">
@@ -355,7 +305,7 @@
     @parent
     <script type='text/javascript' src="{{ asset('js/jquery.min.js') }}"></script>
     <script type='text/javascript' src="{{ asset('vendor/bootstrap-tagsinput/tagsinput.js') }}"></script>
-
+    
     <script type="text/javascript" src="{{ asset('js/bootstrap3-typeahead.min.js') }}"></script>
     <script
         src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDHpSFafpkDUWTgk0tWXZXqTAISMOHoCEs&libraries=places&callback=initialize"

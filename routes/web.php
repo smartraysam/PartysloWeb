@@ -45,7 +45,10 @@ Route::get('/privacy_policy', function () {
 
 Route::get('/add_new_event', 'EventController@create')->name('add_event')->middleware('auth');
 
-Route::get('/autocomplete', 'EventController@autocomplete')->name('autocomplete')->middleware('auth');
+Route::get('/autocomplete', 'EventController@autocomplete')->name('autocomplete');
+
+Route::get('/categorysearch', 'EventController@categorysearchcomplete');
+
 
 Route::get('/search', function () {
     return view('search_view');
@@ -63,6 +66,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/event', 'HomeController@viewEvent')->name('event');
+
+Route::get('/events', 'EventController@index');
 
 Route::post('/save_event', 'EventController@store')->name('saveevent')->middleware('auth');
 

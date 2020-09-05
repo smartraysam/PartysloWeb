@@ -25,7 +25,6 @@ class CreateEventsTable extends Migration
             $table->string('end_date');
             $table->string('start_time');
             $table->string('end_time');
-            $table->string('venuetype');
             $table->string('address');
             $table->double('address_latitude')->nullable();
             $table->double('address_longitude')->nullable();
