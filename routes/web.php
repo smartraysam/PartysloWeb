@@ -14,16 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('/', function () {
-    if (Auth::guest()) {
-        if (!Session::has('theme')) {
-            Session::put('theme', "stylelight.css");
-        }
-    } else {
-        Session::put('theme', Auth::user()->theme);
-    }
-    return view('index');
-});
+Route::get('/', 'HomeController@index')->name('index');
+    
 
 Route::get('/about', function () {
     return view('about');
@@ -68,6 +60,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/event', 'HomeController@viewEvent')->name('event');
 
 Route::get('/events', 'EventController@index');
+
+Route::get('/filterevents', 'EventController@eventfilter');
 
 Route::post('/save_event', 'EventController@store')->name('saveevent')->middleware('auth');
 

@@ -138,7 +138,7 @@
                                                     type="text" placeholder="Select Date">
                                             </div>
                                             <div class="col-lg-1 col-md-12 col-sm-12">
-                                                <button class="search-btn" type="submit"><i
+                                                <button class="search-btn" type="submit" id="search"><i
                                                         class="fas fa-search"></i><span>Search</span></button>
                                             </div>
                                         </div>
@@ -148,159 +148,23 @@
                             <div class="main-tabs">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a href="#tab-upcoming" class="nav-link active" data-toggle="tab">Upcoming</a>
+                                        <a href="#tab-upcoming" class="nav-link active" id="upcoming"
+                                            data-toggle="tab">Upcoming</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#tab-trending" class="nav-link" data-toggle="tab">Trending</a>
+                                        <a href="#tab-trending" class="nav-link" id="trending"
+                                            data-toggle="tab">Trending</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#tab-this-week" class="nav-link" data-toggle="tab">This Week</a>
+                                        <a href="#tab-this-week" class="nav-link" id="thisweek" data-toggle="tab">This
+                                            Week</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab-upcoming">
                                         <div class="main-posts">
-                                            <div class="event-main-post">
-                                                <div class="event-top">
-                                                    <div class="event-top-left">
-                                                        <a href="/event">
-                                                            <h4>Event Title Here</h4>
-                                                        </a>
-                                                    </div>
-                                                    <div class="event-top-right">
-                                                        <div class="ticket-price">Ticket Price : <span>$15</span></div>
-                                                        <div class="post-dt-dropdown dropdown">
-                                                            <span class="dropdown-toggle-no-caret" role="button"
-                                                                data-toggle="collapse" data-target="#eventDropdown"><i
-                                                                    class="fas fa-ellipsis-v"></i></span>
-                                                            <div class="dropdown-menu post-rt-dropdown dropdown-menu-right"
-                                                                id="eventDropdown">
-                                                                <a class="post-link-item" href="#">Hide</a>
-                                                                <a class="post-link-item" href="/event">Details</a>
-                                                                <a class="post-link-item" href="/user">User Profile</a>
-                                                                <a class="post-link-item" href="#">Report</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="event-main-image">
-                                                    <div class="main-photo">
-                                                        <div class="photo-overlay"></div>
-                                                        <img src="images/homepage/center/post-img-1.jpg" alt="">
-                                                        <div class="post-buttons">
-                                                            <div class="left-buttons">
-                                                                <ul class="main-btns">
-                                                                    <li><button class="main-btn-link"
-                                                                            onclick="window.location.href = '/buyticket';">Buy
-                                                                            Ticket</button></li>
-                                                                    <li><button class="main-btn-link btn-hide"
-                                                                            onclick="window.location.href = '#';">May
-                                                                            Be</button></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="right-buttons">
-                                                                <ul class="main-btns">
-                                                                    <li><button class="main-btn-link btn-hide"
-                                                                            onclick="window.location.href = '#';">450
-                                                                            Seats</button></li>
-                                                                    <li><button class="main-btn-link btn-hide"
-                                                                            onclick="window.location.href = '#';">Can't
-                                                                            Go</button></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="event-city-dt">
-                                                    <ul class="city-dt-list">
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-map-marker-alt"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>City</span>
-                                                                    <ins>London</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-calendar-alt"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>Date</span>
-                                                                    <ins>21 Nov 2019</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-clock"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>Time</span>
-                                                                    <ins>6 PM to 9 PM</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-cloud-sun"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>Weather</span>
-                                                                    <ins>Clear</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="event-go-dt">
-                                                    <ul class="go-dt-list">
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-check" style="color:#a7a8aa;"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>Going</span>
-                                                                    <ins>45</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-question-circle"
-                                                                    style="color:#a7a8aa;"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>MayBe</span>
-                                                                    <ins>120</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-times" style="color:#a7a8aa;"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>Can't Go</span>
-                                                                    <ins>70</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="like-comments">
-                                                    <div class="left-comments">
-                                                        <a href="#" class="like-item" title="Like">
-                                                            <i class="fas fa-heart"></i>
-                                                            <span><ins>Like</ins> 251</span>
-                                                        </a>
-                                                        <a href="#" class="like-item lc-left" title="Comment">
-                                                            <i class="fas fa-comment-alt"></i>
-                                                            <span><ins>Comment</ins> 10</span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="right-comments">
-                                                        <a href="#" class="like-item" title="Share">
-                                                            <i class="fas fa-share-alt"></i>
-                                                            <span><ins>Share</ins> 21</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
+                                            <div id="event_content">
+                                                @include('theme.event_upcoming')
                                             </div>
                                             <div class="main-loader">
                                                 <div class="spinner">
@@ -313,151 +177,10 @@
                                     </div>
                                     <div class="tab-pane" id="tab-trending">
                                         <div class="main-posts">
-                                            <div class="event-main-post">
-                                                <div class="event-top">
-                                                    <div class="event-top-left">
-                                                        <a href="event_detail_view.html">
-                                                            <h4>Event Title Here</h4>
-                                                        </a>
-                                                    </div>
-                                                    <div class="event-top-right">
-                                                        <div class="ticket-price">Ticket Price : <span>$15</span></div>
-                                                        <div class="post-dt-dropdown dropdown">
-                                                            <span class="dropdown-toggle-no-caret" role="button"
-                                                                data-toggle="collapse" data-target="#trendDropdown"><i
-                                                                    class="fas fa-ellipsis-v"></i></span>
-                                                            <div class="dropdown-menu post-rt-dropdown dropdown-menu-right"
-                                                                id="trendDropdown">
-                                                                <a class="post-link-item" href="#">Hide</a>
-                                                                <a class="post-link-item" href="#">Details</a>
-                                                                <a class="post-link-item" href="#">User Profile</a>
-                                                                <a class="post-link-item" href="#">Report</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="event-main-image">
-                                                    <div class="main-photo">
-                                                        <div class="photo-overlay"></div>
-                                                        <img src="images/homepage/center/post-img-1.jpg" alt="">
-                                                        <div class="treading">
-                                                            <img src="images/homepage/center/trending.svg" alt="">
-                                                        </div>
-                                                        <div class="post-buttons">
-                                                            <div class="left-buttons">
-                                                                <ul class="main-btns">
-                                                                    <li><button class="main-btn-link"
-                                                                            onclick="window.location.href = '#';">Buy
-                                                                            Ticket</button></li>
-                                                                    <li><button class="main-btn-link btn-hide"
-                                                                            onclick="window.location.href = '#';">May
-                                                                            Be</button></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="right-buttons">
-                                                                <ul class="main-btns">
-                                                                    <li><button class="main-btn-link btn-hide"
-                                                                            onclick="window.location.href = '#';">450
-                                                                            Seats</button></li>
-                                                                    <li><button class="main-btn-link btn-hide"
-                                                                            onclick="window.location.href = '#';">Can't
-                                                                            Go</button></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="event-city-dt">
-                                                    <ul class="city-dt-list">
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-map-marker-alt"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>City</span>
-                                                                    <ins>London</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-calendar-alt"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>Date</span>
-                                                                    <ins>21 Nov 2019</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-clock"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>Time</span>
-                                                                    <ins>6 PM to 9 PM</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-cloud-sun"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>Weather</span>
-                                                                    <ins>Clear</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="event-go-dt">
-                                                    <ul class="go-dt-list">
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-check" style="color:#a7a8aa;"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>Going</span>
-                                                                    <ins>45</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-question-circle"
-                                                                    style="color:#a7a8aa;"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>MayBe</span>
-                                                                    <ins>120</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-times" style="color:#a7a8aa;"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>Can't Go</span>
-                                                                    <ins>70</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="like-comments">
-                                                    <div class="left-comments">
-                                                        <a href="#" class="like-item" title="Like">
-                                                            <i class="fas fa-heart"></i>
-                                                            <span><ins>Like</ins> 251</span>
-                                                        </a>
-                                                        <a href="#" class="like-item lc-left" title="Comment">
-                                                            <i class="fas fa-comment-alt"></i>
-                                                            <span><ins>Comment</ins> 10</span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="right-comments">
-                                                        <a href="#" class="like-item" title="Share">
-                                                            <i class="fas fa-share-alt"></i>
-                                                            <span><ins>Share</ins> 21</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
+                                            <div id="event_content">
+                                                @include('theme.event_trending')
                                             </div>
+                                           
 
                                             <div class="main-loader">
                                                 <div class="spinner">
@@ -470,149 +193,10 @@
                                     </div>
                                     <div class="tab-pane" id="tab-this-week">
                                         <div class="main-posts">
-                                            <div class="event-main-post">
-                                                <div class="event-top">
-                                                    <div class="event-top-left">
-                                                        <a href="event_detail_view.html">
-                                                            <h4>Event Title Here</h4>
-                                                        </a>
-                                                    </div>
-                                                    <div class="event-top-right">
-                                                        <div class="ticket-price">Ticket Price : <span>$15</span></div>
-                                                        <div class="post-dt-dropdown dropdown">
-                                                            <span class="dropdown-toggle-no-caret" role="button"
-                                                                data-toggle="collapse" data-target="#weekDropdown"><i
-                                                                    class="fas fa-ellipsis-v"></i></span>
-                                                            <div class="dropdown-menu post-rt-dropdown dropdown-menu-right"
-                                                                id="weekDropdown">
-                                                                <a class="post-link-item" href="#">Hide</a>
-                                                                <a class="post-link-item" href="#">Details</a>
-                                                                <a class="post-link-item" href="#">User Profile</a>
-                                                                <a class="post-link-item" href="#">Report</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="event-main-image">
-                                                    <div class="main-photo">
-                                                        <div class="photo-overlay"></div>
-                                                        <img src="images/homepage/center/post-img-1.jpg" alt="">
-                                                        <div class="post-buttons">
-                                                            <div class="left-buttons">
-                                                                <ul class="main-btns">
-                                                                    <li><button class="main-btn-link"
-                                                                            onclick="window.location.href = '#';">Buy
-                                                                            Ticket</button></li>
-                                                                    <li><button class="main-btn-link btn-hide"
-                                                                            onclick="window.location.href = '#';">May
-                                                                            Be</button></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="right-buttons">
-                                                                <ul class="main-btns">
-                                                                    <li><button class="main-btn-link btn-hide"
-                                                                            onclick="window.location.href = '#';">450
-                                                                            Seats</button></li>
-                                                                    <li><button class="main-btn-link btn-hide"
-                                                                            onclick="window.location.href = '#';">Can't
-                                                                            Go</button></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="event-city-dt">
-                                                    <ul class="city-dt-list">
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-map-marker-alt"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>City</span>
-                                                                    <ins>London</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-calendar-alt"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>Date</span>
-                                                                    <ins>21 Nov 2019</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-clock"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>Time</span>
-                                                                    <ins>6 PM to 9 PM</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-cloud-sun"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>Weather</span>
-                                                                    <ins>Clear</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="event-go-dt">
-                                                    <ul class="go-dt-list">
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-check" style="color:#a7a8aa;"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>Going</span>
-                                                                    <ins>45</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-question-circle"
-                                                                    style="color:#a7a8aa;"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>MayBe</span>
-                                                                    <ins>120</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="it-items">
-                                                                <i class="fas fa-times" style="color:#a7a8aa;"></i>
-                                                                <div class="list-text-dt">
-                                                                    <span>Can't Go</span>
-                                                                    <ins>70</ins>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="like-comments">
-                                                    <div class="left-comments">
-                                                        <a href="#" class="like-item" title="Like">
-                                                            <i class="fas fa-heart"></i>
-                                                            <span><ins>Like</ins> 251</span>
-                                                        </a>
-                                                        <a href="#" class="like-item lc-left" title="Comment">
-                                                            <i class="fas fa-comment-alt"></i>
-                                                            <span><ins>Comment</ins> 10</span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="right-comments">
-                                                        <a href="#" class="like-item" title="Share">
-                                                            <i class="fas fa-share-alt"></i>
-                                                            <span><ins>Share</ins> 21</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
+                                          
+                                            <div id="event_content">
+                                                @include('theme.event_thisweek')
                                             </div>
-
                                             <div class="main-loader">
                                                 <div class="spinner">
                                                     <div class="bounce1"></div>
@@ -817,40 +401,64 @@
 
     </script>
     <script>
+        var event_type="upcoming";
+        var event_cat,event_city, event_date;
+        $("#upcoming").click(function() {
+           console.log('upcoming');
+           event_type="upcoming";
+        });
+        $("#trending").click(function() {
+           console.log('trending');
+           event_type="trending";
+        });
+        $("#thisweek").click(function() {
+            event_type="thisweek";
+           console.log('this week');
+        });
         var SITEURL = "{{ url('/') }}";
+        var path ="events";
         var page = 1; //track user scroll as page number, right now page number is 1
-        load_more(page); //initial content load
+      //  load_more(page); //initial content load
         $(window).scroll(function() { //detect page scroll
             if ($(window).scrollTop() + $(window).height() >= $(document)
                 .height()) { //if user scrolled from top to bottom of the page
                 page++; //page number increment
-                load_more(page); //load content   
+                load_more(page,path); //load content   
             }
         });
 
-        function load_more(page) {
+        $("#search").click(function() {
+            page=1;
+            path="filterevents";
+            $("#event_content").empty();
+            load_more(page,path);
+        });
+        function load_more(page,path) {
             $.ajax({
-                    url: SITEURL + "/events?page=" + page,
+                    url: SITEURL + "/"+path+"?page=" + page,
                     type: "get",
+                    data: { type: event_type,category: event_cat, city:event_city, date:event_date },
                     datatype: "json",
                     beforeSend: function() {
-                        $('.ajax-loading').show();
+                        $('.main-loader').show();
                     }
                 })
                 .done(function(data) {
+                    console.log(data);
                     if (data.length == 0) {
                         console.log(data.length);
                         //notify user if nothing to load
-                        $('.ajax-loading').html("No more records!");
+                        $('.main-loader').html("No more records!");
                         return;
                     }
-                    $('.ajax-loading').hide(); //hide loading animation once data is received
-                    $("#results").append(data); //append data into #results element          
-                    console.log(data.length);
+                    $('.main-loader').hide(); //hide loading animation once data is received
+                    $("#event_content").append(data); //append data into #results element          
+                    //console.log(data.length);
                 })
                 .fail(function(jqXHR, ajaxOptions, thrownError) {
                     alert('No response from server');
-                });
+                })
+
         }
 
     </script>

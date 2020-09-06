@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -24,8 +24,13 @@ class HomeController extends Controller
         } else {
             Session::put('theme', Auth::user()->theme);
         }
+        $eventsupcoming = Event::join('eventstats', 'eventstats.event_id', "events.id")->paginate(5);
+        
+        $eventstrending = Event::join('eventstats', 'eventstats.event_id', "events.id")->paginate(5);
+        
+        $eventsthisweek = Event::join('eventstats', 'eventstats.event_id', "events.id")->paginate(5);
 
-        return view('index', compact('theme'));
+        return view('index', compact('eventsupcoming','eventstrending','eventsthisweek'));
     }
     public function settheme(Request $request)
     {
