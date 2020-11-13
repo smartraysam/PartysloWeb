@@ -16,12 +16,12 @@ class CreateEventstatsTable extends Migration
         Schema::create('eventstats', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('event_id');
-            $table->unsignedBigInteger('going')->default(0);
-            $table->unsignedBigInteger('maybe')->default(0);
-            $table->unsignedBigInteger('notgoing')->default(0);
-            $table->unsignedBigInteger('share')->default(0);
-            $table->unsignedBigInteger('like')->default(0);
-            $table->unsignedBigInteger('comments')->default(0);
+            $table->string('going')->default(0);
+            $table->string('maybe')->default(0);
+            $table->string('notgoing')->default(0);
+            $table->string('share')->default(0);
+            $table->string('like')->default(0);
+            $table->string('comments')->default(0);
             $table->timestamps();
         });
     }

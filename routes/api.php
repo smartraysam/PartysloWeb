@@ -18,12 +18,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/load_djlist', 'ApiController@DJListsApI');
+Route::post('/v1/save_djlist', 'ApiController@DJListsApI');
+Route::post('/v1/save_event', 'ApiController@FacebookEventAPI');
 
-Route::post('/encrypt', 'DjlistController@encryptthis');
-
-Route::post('/decrypt', 'DjlistController@decryptthis');
-
-Route::post('/testdecrypt', 'DjlistController@testdecrypt');
-Route::post('/testencrypt', 'DjlistController@testencrypt');
-Route::post('/hex2base64', 'DjlistController@hexbase64');
+Route::get('/v1/events', 'MobileapiController@loadEvents');
+Route::get('/v1/event', 'MobileapiController@getEvent');
+Route::get('/v1/location', 'MobileapiController@getLocation');
+Route::get('/v1/dj', 'MobileapiController@getDJ');
+Route::get('/v1/register', 'MobileapiController@register');
+Route::get('/v1/login', 'MobileapiController@login');

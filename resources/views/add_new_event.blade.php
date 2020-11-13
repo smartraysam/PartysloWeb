@@ -229,7 +229,10 @@
                                         <h6>Event Venue*</h6>
                                     </div>
                                     <div class="add-input-items">
-                                        <div class="add-evnt-dt" style="margin-bottom: 10px">
+                                        <input class="add-inputs" type="text" name="venue" placeholder="Event Venue">
+                                    </div>
+                                    <div class="add-input-items">
+                                        <div class="add-evnt-dt">
                                             <input class="add-inputs  map-input" type="text" placeholder="Search City"
                                                 id="address-input" name="address" autocomplete="off">
                                             <i class="fas fa-search ev-icon"></i>
@@ -237,12 +240,12 @@
                                             <input type="hidden" name="address_longitude" id="address-longitude"
                                                 value="0" />
                                         </div>
-                                        <div class="add-input-items" id="address-map-container"
-                                            style="width:100%;height:400px; ">
-                                            <div style="width: 100%; height: 100%" id="address-map"></div>
-                                        </div>
-
                                     </div>
+                                    <div class="add-input-items" id="address-map-container"
+                                        style="width:100%;height:400px; ">
+                                        <div style="width: 100%; height: 100%" id="address-map"></div>
+                                    </div>
+
                                 </div>
                                 <div class="input-section-item">
                                     <div class="add-input-title">
@@ -282,12 +285,13 @@
                                         <i class="fas fa-user"></i>
                                         <h6>Organizer Team* </h6>
                                     </div>
-
                                     <div class="add-input-items">
                                         <input class="add-inputs" type="Search" name="organizers" data-role="tagsinput">
                                         <span>
                                             <p>Seperate entries with comma</p>
                                         </span>
+                                        <input class="add-inputs" type="text" name="organizerslink"
+                                            placeholder="Organizer web page">
                                     </div>
                                 </div>
                                 <div class="upload-mp">
@@ -305,7 +309,7 @@
     @parent
     <script type='text/javascript' src="{{ asset('js/jquery.min.js') }}"></script>
     <script type='text/javascript' src="{{ asset('vendor/bootstrap-tagsinput/tagsinput.js') }}"></script>
-    
+
     <script type="text/javascript" src="{{ asset('js/bootstrap3-typeahead.min.js') }}"></script>
     <script
         src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDHpSFafpkDUWTgk0tWXZXqTAISMOHoCEs&libraries=places&callback=initialize"

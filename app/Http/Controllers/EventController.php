@@ -700,12 +700,13 @@ class EventController extends Controller
             'end_date' => $request->end_date,
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
-            'venuetype' => $request->venuetype,
+            'venue' => $request->venue,
             'address' => $request->address,
             'address_latitude' => $request->address_latitude,
             'address_longitude' => $request->address_longitude,
             'image' => $imagelink,
             'organizers' => $request->organizers,
+            'organizerlink' => $request->organizerslink,
 
         ]);
         $event->save();

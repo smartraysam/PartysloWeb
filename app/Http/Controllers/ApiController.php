@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Djlist;
+use App\Event;
+use App\Eventstat;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
@@ -10,28 +12,44 @@ class ApiController extends Controller
 
     public function FacebookEventAPI(Request $request)
     {
+       
+        $checkEvent = Event::where("title", $request->title)->first();
+        
+        if ($checkEvent) {
+             $stat = Eventstat::where('event_id',$checkEvent->id)->first();
+             if($stat!=null){
+               // \Log::info($stat);
+                 $stat->maybe = $request->interested;
+                 $stat->going = $request->going;
+                $stat->save();
+             }           
+            return response()->json("Event exist", 202);
+        }
         $event = Event::create([
             'title' => $request->title,
-            'owner' => "0",
-            'djlist_id' => $dj_id,
+            'owner' => $request->owner,
+            'djlist_id' => 0,
             'description' => $request->description,
-            'ticketfee' => $request->ticket,
+            'ticketfee' => "Ticket Link",
             'category' => $request->category,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
-            'venuetype' => $request->venuetype,
+            'venue' => $request->venue,
             'address' => $request->address,
             'address_latitude' => $request->address_latitude,
             'address_longitude' => $request->address_longitude,
-            'image' => $imagelink,
+            'image' => $request->imagelink,
             'organizers' => $request->organizers,
+            'organizerlink' => $request->organizerslink,
 
         ]);
         $event->save();
         $eventstat = Eventstat::create([
             'event_id' => $event->id,
+            'going' => $request->going,
+            'maybe' => $request->interested,
         ]);
         $eventstat->save();
     }
