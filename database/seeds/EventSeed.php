@@ -12,7 +12,7 @@ class EventSeed extends Seeder
     public function run()
     {
         //
-        factory(App\Event::class, 200)->create()->each(function ($event) {
+        factory(App\Event::class, 50)->create()->each(function ($event) {
             $event->Events()->save(factory(App\Eventstat::class)->make());
         });
     }

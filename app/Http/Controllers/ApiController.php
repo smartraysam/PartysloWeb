@@ -12,17 +12,17 @@ class ApiController extends Controller
 
     public function FacebookEventAPI(Request $request)
     {
-       
+
         $checkEvent = Event::where("title", $request->title)->first();
-        
+
         if ($checkEvent) {
-             $stat = Eventstat::where('event_id',$checkEvent->id)->first();
-             if($stat!=null){
-               // \Log::info($stat);
-                 $stat->maybe = $request->interested;
-                 $stat->going = $request->going;
+            $stat = Eventstat::where('event_id', $checkEvent->id)->first();
+            if ($stat != null) {
+                // \Log::info($stat);
+                $stat->maybe = $request->interested;
+                $stat->going = $request->going;
                 $stat->save();
-             }           
+            }
             return response()->json("Event exist", 202);
         }
         $event = Event::create([
@@ -60,6 +60,10 @@ class ApiController extends Controller
         $page = (object) $request->page;
         $checkDJ = Djlist::where("name", $request->name)->first();
         if ($checkDJ) {
+            if ($page) {
+                $checkDJ->image = $page->image;
+                $checkDJ->save();
+            }
             return response()->json("DJ exist", 202);
         }
         if ($page) {
@@ -69,6 +73,7 @@ class ApiController extends Controller
 
             $djinfo = Djlist::create([
                 'name' => $request->name,
+                'image' => $page->image,
                 'link' => $request->link,
                 'follower' => $request->follower,
                 'genre' => json_encode($genre),

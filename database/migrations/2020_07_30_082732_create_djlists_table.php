@@ -16,6 +16,7 @@ class CreateDjlistsTable extends Migration
         Schema::create('djlists', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('image');
             $table->string('link');
             $table->string('follower');
             $table->json('genre');

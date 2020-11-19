@@ -1,9 +1,9 @@
 <?php
 
-use App\Eventstat;
+use App\Eventdjs;
 use Illuminate\Database\Seeder;
 
-class EventStatSeed extends Seeder
+class EventDjSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,6 @@ class EventStatSeed extends Seeder
      */
     public function run()
     {
-        factory(App\Eventstat::class, 50)->create();
+        factory(App\Eventdjs::class, 400)->create();
     }
 }

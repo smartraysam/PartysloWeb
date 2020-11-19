@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\Eventdjs;
+use App\Eventimg;
 use App\Location;
 use App\Notify;
 use Illuminate\Http\Request;
@@ -74,13 +76,17 @@ class MobileapiController extends Controller
     }
     public function getEvent(Request $request)
     {
-
         $event_id = $request->id;
-        $event = Event::where('id', $event_id)
-            ->join('eventstats', 'eventstats.event_id', '=', $event_id)->first();
+        $event = Event::where('events.id', '=', $event_id)
+            ->join('eventstats', 'eventstats.event_id', '=', 'events.id')->first();
+        $djs = Eventdjs::where('event_id', '=', $event_id)
+            ->join('djlists', 'djlists.id', '=', 'eventdjs.djlist_id')->get();
+        $images = Eventimg::where('event_id', '=', $event_id)->select(['image'])->get();
         return response()->json([
             'status' => 'OK',
-            'result' => $event,
+            'eventdetails' => $event,
+            'djs' => $djs,
+            'images' => $images,
         ]);
 
     }

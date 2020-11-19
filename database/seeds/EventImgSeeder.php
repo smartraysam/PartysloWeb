@@ -1,9 +1,9 @@
 <?php
 
-use App\Eventstat;
+use App\Eventimg;
 use Illuminate\Database\Seeder;
 
-class EventStatSeed extends Seeder
+class EventImgSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,7 @@ class EventStatSeed extends Seeder
      */
     public function run()
     {
-        factory(App\Eventstat::class, 50)->create();
+        //
+        factory(App\Eventimg::class, 400)->create();
     }
 }
