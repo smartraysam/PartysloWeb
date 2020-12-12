@@ -265,18 +265,22 @@
                                 <div class="input-section-item">
                                     <div class="add-input-title">
                                         <i class="fas fa-image"></i>
-                                        <h6>Image*</h6>
+                                        <h6>Event Image(s)*</h6>
                                     </div>
                                     <div class="add-input-items">
                                         <div class="add-evnt-dt">
-                                            <div class="event-add-img1">
-                                                <img id="preview" src="images/add-img.jpg" alt="">
-                                            </div>
-                                            <div class="addpic" id="OpenImgUpload">
-                                                <input type="file" id="file" name="event_image">
-                                                <label for="file">Choose File</label>
-                                                <p>Maximum file size : 1 MB</p>
-                                            </div>
+                                            {{-- <form method="POST" name="event_imgs"
+                                                id="event_imgs" enctype="multipart/form-data">
+                                                --}}
+                                                <div class="input-field">
+                                                    <div class="input-images-1" tyle="padding-top: .5rem;">
+                                                    </div>
+                                                </div>
+                                                {{-- <button class="btn btn-success"
+                                                    style="margin-top:10px">Upload Images</button>
+                                                --}}
+                                                {{--
+                                            </form> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -295,7 +299,7 @@
                                     </div>
                                 </div>
                                 <div class="upload-mp">
-                                    <button class="upload-btn" type="submit">Upload Event</button>
+                                    <button class="upload-btn" type="submit">Add Event</button>
                                 </div>
                             </form>
                         </div>
@@ -310,6 +314,7 @@
     <script type='text/javascript' src="{{ asset('js/jquery.min.js') }}"></script>
     <script type='text/javascript' src="{{ asset('vendor/bootstrap-tagsinput/tagsinput.js') }}"></script>
 
+    <script type="text/javascript" src="{{ asset('vendor/imageuploader/image-uploader.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap3-typeahead.min.js') }}"></script>
     <script
         src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDHpSFafpkDUWTgk0tWXZXqTAISMOHoCEs&libraries=places&callback=initialize"
@@ -317,18 +322,10 @@
     <script type='text/javascript' src="{{ asset('js/mapInput.js') }}"></script>
 
     <script type="text/javascript">
-        const readURL = (input) => {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function(e) {
-                    $('#preview').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        $("#file").change(function() {
-            readURL(this);
+        $('.input-images-1').imageUploader({
+            imagesInputName: 'event_image',
+            maxSize: 2 * 1024 * 1024,
+            maxFiles: 10
         });
         $("input.typeahead").typeahead({
             source: function(query, process) {

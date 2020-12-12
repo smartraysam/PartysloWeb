@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Djlist;
 use App\Event;
 use App\Eventstat;
+use App\GooglePlace;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
@@ -52,6 +53,14 @@ class ApiController extends Controller
             'maybe' => $request->interested,
         ]);
         $eventstat->save();
+
+        $place = GooglePlace::create([
+            'event_id' => $event->id,
+            'address' => $request->address,
+            'data' => $request->place,
+        ]);
+        $place->save();
+        return response()->json("Event added", 200);
     }
 
     public function DJListsApI(Request $request)

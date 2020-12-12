@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/imageuploader/image-uploader.min.css') }}">
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('vendor/OwlCarousel/assets/owl.carousel.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/OwlCarousel/assets/owl.theme.default.min.css') }}">
@@ -44,7 +45,8 @@
     <script type='text/javascript' src="{{ asset('js/i18n/datepicker.en.js') }}"></script>
     <script type='text/javascript' src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script type='text/javascript' src="{{ asset('vendor/OwlCarousel/owl.carousel.js') }}"></script>
-    
+    <script type="text/javascript" src="{{ asset('vendor/imageuploader/image-uploader.min.js') }}"></script>
+
     <script type='text/javascript' src="{{ asset('js/custom1.js') }}"></script>
     <script type='text/javascript' src="{{ asset('js/theme.js') }}"></script>
 </body>

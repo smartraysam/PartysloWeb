@@ -652,27 +652,28 @@ class EventController extends Controller
         return response()->json($data);
     }
 
-    public function uploadImage($request)
+    public function uploadImage($request, $eventid)
     {
-        if ($request->has('event_image')) {
+        if ($request->hasfile('event_image')) {
             // Get image file
-
-            $image = $request->file('event_image');
-            // Make a image name based on user name and current timestamp
-
+            $feature_image = "";
             $imgname = str_replace(' ', '', $request->title);
-
-            // Define folder path
             $folder = 'images/events/';
-            // Make a file path where image will be stored [ folder path + file name + file extension]
-            $imagelink = 'images/events/' . $imgname . '.' . $image->getClientOriginalExtension();
-            // Upload image
-
-            $this->uploadOne($image, $folder, 'public', $imgname);
-            // Set user profile image path in database to filePath
+            foreach ($request->file('event_image') as $image) {
+                $name = $image->getClientOriginalName();
+                $feature_image = 'images/events/' . $imgname . "_" . $name . '.' . $image->getClientOriginalExtension();
+                $this->uploadOne($image, $folder, 'public', $imgname);
+                \Log::info($feature_image);
+                $eventimg = Event::create([
+                    'event_id' => $eventid,
+                    'image' => $feature_image,
+                ]);
+                $eventimg->save();
+            }
+            $event = Event::where("id", $eventid)->first();
+            $event->image = $feature_image;
+            $event->save();
         }
-
-        return $imagelink;
     }
 
     /**
@@ -684,7 +685,8 @@ class EventController extends Controller
     public function store(Request $request)
     {
 
-        $imagelink = $this->uploadImage($request);
+        // dd($request);
+
         $dj_id = Djlist::where("name", $request->dj)->value("id");
         if (!$dj_id) {
             $dj_id = 0;
@@ -704,16 +706,18 @@ class EventController extends Controller
             'address' => $request->address,
             'address_latitude' => $request->address_latitude,
             'address_longitude' => $request->address_longitude,
-            'image' => $imagelink,
+            'image' => "https://images.pexels.com/photos/929778/pexels-photo-929778.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
             'organizers' => $request->organizers,
             'organizerlink' => $request->organizerslink,
 
         ]);
         $event->save();
+        $event_id = $event->id;
         $eventstat = Eventstat::create([
-            'event_id' => $event->id,
+            'event_id' => $event_id,
         ]);
         $eventstat->save();
+        $imagelink = $this->uploadImage($request, $event_id);
         return redirect()->back()->with('status', 'Operation Successfully!');
     }
 
