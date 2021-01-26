@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Djlist;
 use App\Event;
-use App\Eventdjs;
 use App\Eventimg;
 use App\GooglePlace;
 use App\Location;
@@ -17,19 +17,23 @@ class MobileapiController extends Controller
     //
     public function register(Request $request)
     {
-
-        $name->$request->name;
-        $email->$request->email;
-        $password->$request->password;
+        $name = $request->name;
+        $email = $request->email;
+        $checkUser = User::whereEmail($email)->first();
+        if ($checkUser) {
+            return response()->json([
+                'status' => "Info",
+                'msg' => "Email already registered",
+            ]);
+        }
+        $password = $request->password;
         $user = User::create([
             'name' => $name,
             'email' => $email,
             'password' => Hash::make($password),
         ]);
         $user->save();
-        return response()->json([
-            'status' => "Ok",
-        ]);
+
     }
 
     public function login(Request $request)
@@ -38,9 +42,8 @@ class MobileapiController extends Controller
         $fcm_token = $request->token;
         $email = $request->email;
         $password = $request->password;
-
         if ((Auth::attempt(['email' => $email, 'password' => $password]))) {
-            $userLogin = User::whereEmail($email)->select(['name', 'role', 'image', 'dashboard_id'])->first();
+            $userLogin = User::whereEmail($email)->select(['name'])->first();
             $checknotify = Notify::where("mobile_uid", $mobileUUID)->first();
             if ($checknotify) {
                 $checknotify->fcm_token = $fcm_token;
@@ -69,18 +72,31 @@ class MobileapiController extends Controller
 
     public function loadEvents(Request $request)
     {
-        $location = $request->location;
-        $events = Event::where('address', 'LIKE', '%' . $location . '%')->paginate(20);
-        if ($events->isEmpty()) {
+        $today = Carbon::today()->format('Y-m-d');
+        if ($request->has('city') && $request->has('country')) {
+            $city = $request->city;
+            $country = $request->country;
+            $events = Event::where('address', 'LIKE', '%' . $country . '%')
+                ->orWhere('address', 'LIKE', '%' . $city . '%')
+                ->where("start_date", '<=', $today)
+                ->where("end_date", '>=', $today)
+                ->paginate(20);
+            if ($events->isEmpty()) {
+                return response()->json([
+                    'status' => 'Info',
+                    'result' => $events,
+                ]);
+            }
+            return response()->json([
+                'status' => 'OK',
+                'result' => $events,
+            ]);
+        } else {
             return response()->json([
                 'status' => 'Info',
-                'result' => 'No result',
+                'result' => response()->json(["event" => "invalid request"]),
             ]);
         }
-        return response()->json([
-            'status' => 'OK',
-            'result' => $events,
-        ]);
 
     }
 
@@ -89,8 +105,47 @@ class MobileapiController extends Controller
         $event_id = $request->id;
         $event = Event::where('events.id', '=', $event_id)
             ->join('eventstats', 'eventstats.event_id', '=', 'events.id')->first();
-        $djs = Eventdjs::where('event_id', '=', $event_id)
-            ->join('djlists', 'djlists.id', '=', 'eventdjs.djlist_id')->get();
+
+        $djs = array();
+        $djids = json_decode($event->djlist_id);
+        foreach ($djids as $key => $value) {
+            if (is_numeric($value)) {
+                if ($value == 0) {
+                    $genre = array("Others");
+                    $social = array("Others");
+                    $location = array("Others");
+                    $dj = new Djlist;
+                    $dj->name = "Other";
+                    $dj->image = "https://fandf-si7mj9eju7kjbgtgaeu.netdna-ssl.com/wp-content/uploads/2018/01/What-Is-A-DJ-1080x675.jpg";
+                    $dj->link = "https://thedjlist.com/";
+                    $dj->follower = "0";
+                    $dj->genre = json_encode($genre);
+                    $dj->music = "Other";
+                    $dj->social = json_encode($social);
+                    $dj->location = json_encode($location);
+                    array_push($djs, $dj);
+                } else {
+                    $dj = Djlist::where('id', '=', $value)->first();
+                    array_push($djs, $dj);
+                }
+
+            } else {
+                $genre = array("Others");
+                $social = array("Others");
+                $location = array("Others");
+                $dj = new Djlist;
+                $dj->name = $value;
+                $dj->image = "https://fandf-si7mj9eju7kjbgtgaeu.netdna-ssl.com/wp-content/uploads/2018/01/What-Is-A-DJ-1080x675.jpg";
+                $dj->link = "https://thedjlist.com/";
+                $dj->follower = "0";
+                $dj->genre = json_encode($genre);
+                $dj->music = "Other";
+                $dj->social = json_encode($social);
+                $dj->location = json_encode($location);
+                array_push($djs, $dj);
+            }
+        }
+
         $images = Eventimg::where('event_id', '=', $event_id)->select(['image'])->get();
         return response()->json([
             'status' => 'OK',
@@ -132,16 +187,29 @@ class MobileapiController extends Controller
             'place' => $location,
         ]);
     }
+    public function getPlacebyid(Request $request)
+    {
+        $eventid = $request->id;
+        $location = GooglePlace::where('event_id', "=", $eventid)
+            ->select("data", "address", "name")->first();
+        return response()->json([
+            'status' => 'OK',
+            'place' => $location,
+        ]);
+    }
     public function getSuggestion(Request $request)
     {
+        $today = Carbon::today()->format('Y-m-d');
         $address = $request->address;
         $name = $request->name;
         $events = Event::where('address', 'LIKE', '%' . $address . '%')->orWhere('venue', 'LIKE', '%' . $name . '%')
+            ->where("start_date", '<=', $today)
+            ->where("end_date", '>=', $today)
             ->join('eventstats', 'eventstats.event_id', '=', 'events.id')->limit(10)->get();
         if ($events->isEmpty()) {
             return response()->json([
                 'status' => 'Info',
-                'eventdetails' => 'No result',
+                'eventdetails' => $events,
             ]);
         }
         return response()->json([
@@ -161,62 +229,70 @@ class MobileapiController extends Controller
         $edate = Carbon::parse('next sunday')->toDateString();
         $weekendf = new Carbon('this friday');
         $weekends = new Carbon('this saturday');
-        $todayTime = date('H:m:i');
-        $location = $request->location;
-        $all = Event::where('address', 'LIKE', '%' . $location . '%')
+        $todayTime = date('H:m');
+        $country = $request->location;
+        // $city = $location[0];
+        // $country= $location[1];
+        $all = Event::where('address', 'LIKE', '%' . $country . '%')
+        //    ->orWhere('address', 'LIKE', '%' . $city . '%')
             ->join('eventstats', 'eventstats.event_id', '=', 'events.id')->count();
-        $runnow = Event::where('address', 'LIKE', '%' . $location . '%')
-            ->whereDate("start_date", '>=', $today)
-            ->whereDate("end_date", '<=', $today)
-            ->whereDate("start_time", '>=', $todayTime)
-            ->whereDate("end_time", '<=', $todayTime)->count();
-        $runToday = Event::where('address', 'LIKE', '%' . $location . '%')
-            ->whereDate("start_date", '>=', $today)
-            ->whereDate("start_date", '<=', $today)->count();
-        $runTomorrow = Event::where('address', 'LIKE', '%' . $location . '%')
-            ->whereDate("start_date", '==', $tomorrow)->count();
-        $runthisWeek = Event::where('address', 'LIKE', '%' . $location . '%')
-            ->where("start_date", '>=', $sweek)
-            ->where("start_date", '<=', $eweek)->count();
-        $runthisWeekend = Event::where('address', 'LIKE', '%' . $location . '%')
-            ->where("start_date", '==', $weekendf)
-            ->orwhere("start_date", '==', $weekendf)->count();
-        $runNextweek = Event::where('address', 'LIKE', '%' . $location . '%')
-            ->whereDate("start_date", '>', $sdate)
-            ->whereDate("start_date", '<', $edate)->count();
+        $runnow = Event::where('address', 'LIKE', '%' . $country . '%')
+        // ->orWhere('address', 'LIKE', '%' . $city . '%')
+            ->whereDate("start_date", '<=', $today)
+            ->whereDate("end_date", '>=', $today)
+            ->whereTime("start_time", '<=', $todayTime)
+            ->whereTime("end_time", '>=', $todayTime)->count();
+        $runToday = Event::where('address', 'LIKE', '%' . $country . '%')
+        //  ->orWhere('address', 'LIKE', '%' . $city . '%')
+            ->whereDate("start_date", '<=', $today)
+            ->whereDate("end_date", '>=', $today)->count();
+        $runTomorrow = Event::where('address', 'LIKE', '%' . $country . '%')
+        //  ->orWhere('address', 'LIKE', '%' . $city . '%')
+            ->whereDate("end_date", '>=', $tomorrow)->count();
+        $runthisWeek = Event::where('address', 'LIKE', '%' . $country . '%')
+        //  ->orWhere('address', 'LIKE', '%' . $city . '%')
+            ->where("end_date", '>', $sweek)
+            ->count();
+        $runthisWeekend = Event::where('address', 'LIKE', '%' . $country . '%')
+        // ->orWhere('address', 'LIKE', '%' . $city . '%')
+            ->where("start_date", '=', $weekendf)
+            ->orWhere("end_date", '>=', $weekendf)->count();
+        $runNextweek = Event::where('address', 'LIKE', '%' . $country . '%')
+        //  ->orWhere('address', 'LIKE', '%' . $city . '%')
+            ->whereDate("end_date", '>', $edate)->count();
+        $app = app();
+        $filter = $app->make('stdClass');
+        $filter->all = $all;
+        $filter->now = $runnow;
+        $filter->today = $runToday;
+        $filter->tomorrow = $runTomorrow;
+        $filter->thisweek = $runthisWeek;
+        $filter->nextweek = $runNextweek;
         return response()->json([
             'status' => 'OK',
-            'all' => $all,
-            'now' => $runnow,
-            'today' => $runToday,
-            'tomorrow' => $runTomorrow,
-            'thisweek' => $runthisWeek,
-            'nextweek' => $runNextweek,
+            'filter' => $filter,
         ]);
     }
 
     public function getCategory(Request $request)
     {
         $today = Carbon::today();
-        $todayTime = date('H:m:i');
-        $category = Category::all();
-        $address = $request->address;
-       
+        $todayTime = Carbon::now()->format("H:i");
+        $category = Category::select("name")->get();
+        $country = $request->address;
         $Categorydata = array();
         $index = 0;
 
         foreach ($category as $key => $value) {
-            # code...
-            $eventstotal = Event::where('address', 'LIKE', '%' . $address . '%')
-                ->join('eventdjs', 'eventdjs.event_id', '=', 'events.id')
-                ->join('djlists', 'djlists.id', '=', 'eventdjs.djlist_id')->where('genre', 'LIKE', '%' . $value->name . '%')->count();
-            $eventsrun = Event::where('address', 'LIKE', '%' . $address . '%')
-                ->whereDate("start_date", '>=', $today)
-                ->whereDate("end_date", '<=', $today)
-                ->whereDate("start_time", '>=', $todayTime)
-                ->whereDate("end_time", '<=', $todayTime)
-                ->join('eventdjs', 'eventdjs.event_id', '=', 'events.id')
-                ->join('djlists', 'djlists.id', '=', 'eventdjs.djlist_id')->where('genre', 'LIKE', '%' . $value->name . '%')->count();
+            $eventstotal = Event::where('address', 'LIKE', '%' . $country . '%')
+                ->join('djlists', 'djlists.id', '=', 'events.djlist_id')->where('genre', 'LIKE', '%' . $value->name . '%')->count();
+
+            $eventsrun = Event::where('address', 'LIKE', '%' . $country . '%')
+                ->whereDate("start_date", '<=', $today)
+                ->whereDate("end_date", '>=', $today)
+                ->whereTime("start_time", '<=', $todayTime)
+                ->whereTime("end_time", '>=', $todayTime)
+                ->join('djlists', 'djlists.id', '=', 'events.djlist_id')->where('genre', 'LIKE', '%' . $value->name . '%')->count();
 
             $Categorydata[$index] = $value;
             $Categorydata[$index]->running = $eventsrun;
@@ -225,10 +301,10 @@ class MobileapiController extends Controller
 
         }
 
-        if ($Categorydata->isEmpty()) {
+        if (!$Categorydata) {
             return response()->json([
                 'status' => 'Info',
-                'category' => 'No result',
+                'category' => $Categorydata,
             ]);
         }
         return response()->json([
@@ -239,37 +315,58 @@ class MobileapiController extends Controller
 
     public function getNearby(Request $request)
     {
+        $today = Carbon::today()->format('Y-m-d');
         $nearbykeyword = $request->nearby;
         $events = Event::where('address', 'LIKE', '%' . $nearbykeyword . '%')->orWhere('venue', 'LIKE', '%' . $nearbykeyword . '%')
-            ->join('eventstats', 'eventstats.event_id', '=', 'events.id')->paginate(10)->get();
+            ->where("start_date", '<=', $today)
+            ->where("end_date", '>=', $today)->paginate(10);
         if ($events->isEmpty()) {
             return response()->json([
                 'status' => 'Info',
-                'eventdetails' => 'No result',
+                'result' => $events,
             ]);
         }
         return response()->json([
             'status' => 'OK',
-            'eventdetails' => $events,
+            'result' => $events,
         ]);
     }
 
     public function getSearch(Request $request)
     {
+        $today = Carbon::today()->format('Y-m-d');
         $query = $request->keyword;
-        $events = Event::where('address', 'LIKE', '%' . $query . '%')->orWhere('venue', 'LIKE', '%' . $query . '%')
-            ->orWhere('name', 'LIKE', '%' . $query . '%')
+        $address = $request->location;
+        $events = Event::where('address', 'LIKE', '%' . $address . '%')->orWhere('venue', 'LIKE', '%' . $query . '%')
+            ->orWhere('title', 'LIKE', '%' . $query . '%')
+            ->where("start_date", '<=', $today)
+            ->where("end_date", '>=', $today)
             ->join('eventstats', 'eventstats.event_id', '=', 'events.id')->limit(10)->get();
         if ($events->isEmpty()) {
             return response()->json([
                 'status' => 'Info',
-                'eventdetails' => 'No result',
+                'eventsdetails' => $events,
             ]);
         }
         return response()->json([
             'status' => 'OK',
-            'eventdetails' => $events,
+            'eventsdetails' => $events,
         ]);
+    }
+    public function getSearchEvent(Request $request)
+    {
+        $today = Carbon::today()->format('Y-m-d');
+        $event_id = $request->id;
+        $title = $request->title;
+        $event = Event::where('id', '=', $event_id)
+            ->where("title", $title)
+            ->where("start_date", '<=', $today)
+            ->where("end_date", '>=', $today)->paginate(1);
+        return response()->json([
+            'status' => 'OK',
+            'result' => $event,
+        ]);
+
     }
 
 }

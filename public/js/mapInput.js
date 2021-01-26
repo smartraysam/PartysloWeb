@@ -98,7 +98,7 @@ function initialize() {
                 lat,
                 lng
             });
-            console.log('Lat: ${lat.toFixed(5)} Lng: ${lng.toFixed(5)}');
+            // console.log('Lat: ${lat.toFixed(5)} Lng: ${lng.toFixed(5)}');
         },
         onError: err => {
             console.log(err.message + getPositionErrorMessage(err.code));
@@ -161,7 +161,6 @@ function initialize() {
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
             marker.setVisible(false);
             const place = autocomplete.getPlace();
-
             geocoder.geocode({
                 'placeId': place.place_id
             }, function(results, status) {

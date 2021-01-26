@@ -26,8 +26,14 @@
     <link rel="stylesheet" href="{{ asset('vendor/imageuploader/image-uploader.min.css') }}">
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('vendor/OwlCarousel/assets/owl.carousel.css') }}">
+    {{--
     <link rel="stylesheet" href="{{ asset('vendor/OwlCarousel/assets/owl.theme.default.min.css') }}">
+    --}}
+
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-tagsinput/tagsinput.css') }}">
+
+
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-tagsinput/bootstrap-tagsinput.css') }}">
 
 
 </head>

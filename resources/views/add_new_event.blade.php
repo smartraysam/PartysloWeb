@@ -42,7 +42,8 @@
                                         <h6>Title*</h6>
                                     </div>
                                     <div class="add-input-items">
-                                        <input class="add-inputs" type="text" name="title" placeholder="Event Title Here">
+                                        <input class="add-inputs" type="text" name="title" required
+                                            placeholder="Event Title Here">
                                     </div>
                                 </div>
                                 <div class="input-section-item">
@@ -51,7 +52,7 @@
                                         <h6>Description*</h6>
                                     </div>
                                     <div class="add-input-items">
-                                        <textarea class="add-event-des" placeholder="Description here"
+                                        <textarea class="add-event-des" placeholder="Description here" required
                                             name="description"></textarea>
                                     </div>
                                 </div>
@@ -61,7 +62,7 @@
                                         <h6>Ticket Price*</h6>
                                     </div>
                                     <div class="add-input-items">
-                                        <input class="add-inputs" type="text" name="ticket"
+                                        <input class="add-inputs" type="text" name="ticket" required
                                             placeholder="Enter Ticket Price">
                                     </div>
                                 </div>
@@ -77,15 +78,9 @@
                                                     <div class="select-bg mt-20">
                                                         <select class="wide" style="display: none;" name="category">
                                                             <option>Event Category</option>
-                                                            <option>Music</option>
-                                                            <option>Festival</option>
-                                                            <option>Theater</option>
-                                                            <option>Club</option>
-                                                            <option>Comedy</option>
-                                                            <option>Sports</option>
-                                                            <option>Art</option>
-                                                            <option>Promotions</option>
-                                                            <option>Others</option>
+                                                            @foreach ($category as $cat)
+                                                                <option>{{ $cat->name }}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
@@ -103,7 +98,7 @@
                                                 </div>
                                                 <div class="col-md-6"> <input class="add-date-input datepicker-here"
                                                         id="end_date" data-language="en" type="text"
-                                                        placeholder="Select End Date" name="endstart">
+                                                        placeholder="Select End Date" name="enddate">
                                                     <i class="fas fa-calendar-alt dte-icon" style="padding-right: 10px"></i>
                                                 </div>
                                             </div>
@@ -229,7 +224,8 @@
                                         <h6>Event Venue*</h6>
                                     </div>
                                     <div class="add-input-items">
-                                        <input class="add-inputs" type="text" name="venue" placeholder="Event Venue">
+                                        <input class="add-inputs" type="text" name="venue" placeholder="Event Venue"
+                                            required>
                                     </div>
                                     <div class="add-input-items">
                                         <div class="add-evnt-dt">
@@ -254,11 +250,20 @@
                                     </div>
                                     <div class="add-input-items">
                                         <div class="add-evnt-dt">
-                                            <input class="typeahead add-inputs" type="text" placeholder="Search DJ"
-                                                name="dj" autocomplete="off">
+                                            <input class="add-inputs dj-input" type="Search" onfocus="this.value=''"
+                                                placeholder="Search and add DJ " autocomplete="off">
                                             <i class="fas fa-search ev-icon"></i>
-                                        </div>
 
+                                        </div>
+                                        <span>
+                                            <p style="font-size: 12px; font-style: italic;">Press enter to add manually
+                                                if no search result</p>
+                                        </span>
+                                        <div class="add-evnt-dt" style="margin-top: 10px">
+                                            <input class="add-inputs djlists" id="tags-input" type="text" name="dj" value=""
+                                                data-role="tagsinput" required>
+
+                                        </div>
                                     </div>
 
                                 </div>
@@ -290,7 +295,8 @@
                                         <h6>Organizer Team* </h6>
                                     </div>
                                     <div class="add-input-items">
-                                        <input class="add-inputs" type="Search" name="organizers" data-role="tagsinput">
+                                        <input class="add-inputs" type="text" name="organizers" data-role="tagsinput"
+                                            required>
                                         <span>
                                             <p>Seperate entries with comma</p>
                                         </span>
@@ -312,12 +318,14 @@
 @section('scripts')
     @parent
     <script type='text/javascript' src="{{ asset('js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap3-typeahead.min.js') }}">
+    </script>
     <script type='text/javascript' src="{{ asset('vendor/bootstrap-tagsinput/tagsinput.js') }}"></script>
 
     <script type="text/javascript" src="{{ asset('vendor/imageuploader/image-uploader.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/bootstrap3-typeahead.min.js') }}"></script>
+
     <script
-        src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDHpSFafpkDUWTgk0tWXZXqTAISMOHoCEs&libraries=places&callback=initialize"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBeuR3UL5jXHRmwVFO4R9NyR6A0pjOvzt0&libraries=places&callback=initialize"
         async defer></script>
     <script type='text/javascript' src="{{ asset('js/mapInput.js') }}"></script>
 
@@ -327,7 +335,15 @@
             maxSize: 2 * 1024 * 1024,
             maxFiles: 10
         });
-        $("input.typeahead").typeahead({
+
+
+        var elt = $('input.djlists');
+        elt.tagsinput({
+            allowDuplicates: false,
+            itemValue: 'id',
+            itemText: 'name'
+        });
+        $("input.dj-input").typeahead({
             source: function(query, process) {
                 return $.get(
                     "/autocomplete", {
@@ -339,7 +355,26 @@
                 );
             },
             updater: function(item) {
-                return item;
+
+                items = item;
+                elt.tagsinput('add', {
+                    id: item.id,
+                    name: item.name
+                });
+            }
+        });
+
+        $(".dj-input").on('keyup', function(e) {
+            if (e.key === 'Enter' || e.keyCode === 13) {
+                var inputVal = $(this).val();
+                console.log(inputVal)
+                elt.tagsinput('add', {
+                    id: inputVal,
+                    name: inputVal
+                });
+                $(".dj-input").blur();
+                $(".dj-input").val('');
+                $(".dj-input").first().focus();
             }
         });
 

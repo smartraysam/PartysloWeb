@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\EventImg;
+use App\Eventimg;
 use Illuminate\Http\Request;
 
-class EventImgController extends Controller
+class EventimgController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class EventImgController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\EventImg  $eventImg
+     * @param  \App\Eventimg  $Eventimg
      * @return \Illuminate\Http\Response
      */
-    public function show(EventImg $eventImg)
+    public function show(Eventimg $Eventimg)
     {
         //
     }
@@ -52,10 +52,10 @@ class EventImgController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\EventImg  $eventImg
+     * @param  \App\Eventimg  $Eventimg
      * @return \Illuminate\Http\Response
      */
-    public function edit(EventImg $eventImg)
+    public function edit(Eventimg $Eventimg)
     {
         //
     }
@@ -64,10 +64,10 @@ class EventImgController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\EventImg  $eventImg
+     * @param  \App\Eventimg  $Eventimg
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EventImg $eventImg)
+    public function update(Request $request, Eventimg $Eventimg)
     {
         //
     }
@@ -75,10 +75,10 @@ class EventImgController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\EventImg  $eventImg
+     * @param  \App\Eventimg  $Eventimg
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EventImg $eventImg)
+    public function destroy(Eventimg $Eventimg)
     {
         //
     }

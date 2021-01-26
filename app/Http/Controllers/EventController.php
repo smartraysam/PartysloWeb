@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Djlist;
 use App\Event;
+use App\Eventimg;
 use App\Eventstat;
+use App\GooglePlace;
 use App\Traits\UploadTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -641,13 +645,15 @@ class EventController extends Controller
      */
     public function create()
     {
-        return view('add_new_event');
+        $category = Category::select("name")->get();
+        return view('add_new_event', compact('category'));
     }
     public function autocomplete(Request $request)
     {
         $str = $request->get('query');
-        $data = Djlist::select("name")
+        $data = Djlist::select(["id", "name", "genre"])
             ->where('name', 'LIKE', '%' . $str . '%')
+            ->orwhere('genre', 'LIKE', '%' . $str . '%')
             ->get();
         return response()->json($data);
     }
@@ -661,17 +667,17 @@ class EventController extends Controller
             $folder = 'images/events/';
             foreach ($request->file('event_image') as $image) {
                 $name = $image->getClientOriginalName();
-                $feature_image = 'images/events/' . $imgname . "_" . $name . '.' . $image->getClientOriginalExtension();
+                $feature_image = 'images/events/' . $imgname . '_' . $name . '.' . $image->getClientOriginalExtension();
                 $this->uploadOne($image, $folder, 'public', $imgname);
                 \Log::info($feature_image);
-                $eventimg = Event::create([
+                $eventimg = Eventimg::create([
                     'event_id' => $eventid,
-                    'image' => $feature_image,
+                    'image' => env('APP_URL') . "/" . $feature_image,
                 ]);
                 $eventimg->save();
             }
             $event = Event::where("id", $eventid)->first();
-            $event->image = $feature_image;
+            $event->image = env('APP_URL') . "/" . $feature_image;
             $event->save();
         }
     }
@@ -684,26 +690,37 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-
-        // dd($request);
-
-        $dj_id = Djlist::where("name", $request->dj)->value("id");
-        if (!$dj_id) {
-            $dj_id = 0;
+        $address = $request->address;
+        $placeid = $request->address_placeid;
+        $start_date = Carbon::createFromFormat('m/d/Y', $request->startdate)->format('Y-m-d');
+        $end_date = Carbon::createFromFormat('m/d/Y', $request->enddate)->format('Y-m-d');
+        $djlist_id = array();
+        $start_time = date("H:i", strtotime($request->starttime));
+        $end_time = date("H:i", strtotime($request->endtime));
+        $djs = $request->djs;
+        $arrayDj = explode(",", $djs);
+        foreach ($arrayDJ as $key => $value) {
+            array_push($djlist_id, $value);
         }
+       
+        $venue = $request->venue;
+        if (count($djlist_id)==0) {
+            array_push($djlist_id, 0);
+        }
+        
         $event = Event::create([
             'title' => $request->title,
             'owner' => Auth::user()->id,
-            'djlist_id' => $dj_id,
+            'djlist_id' => json_encode($djlist_id),
             'description' => $request->description,
             'ticketfee' => $request->ticket,
             'category' => $request->category,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
-            'venue' => $request->venue,
-            'address' => $request->address,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'start_time' => $start_time,
+            'end_time' => $end_time,
+            'venue' => $venue,
+            'address' => $address,
             'address_latitude' => $request->address_latitude,
             'address_longitude' => $request->address_longitude,
             'image' => "https://images.pexels.com/photos/929778/pexels-photo-929778.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
@@ -712,15 +729,30 @@ class EventController extends Controller
 
         ]);
         $event->save();
+        $address = $request->address;
         $event_id = $event->id;
         $eventstat = Eventstat::create([
             'event_id' => $event_id,
         ]);
         $eventstat->save();
         $imagelink = $this->uploadImage($request, $event_id);
+        $this->getPlaceDetails($placeid, $event_id, $venue, $address);
         return redirect()->back()->with('status', 'Operation Successfully!');
     }
 
+    public function getPlaceDetails($placeid, $eventid, $venue, $address)
+    {
+        $client = new \GuzzleHttp\Client(['verify' => false]);
+        $request = $client->get('https://maps.googleapis.com/maps/api/place/details/json?placeid=' . $placeid . '&fields=name,rating,formatted_phone_number,icon,types,url,website,opening_hours,price_level,business_status,formatted_address&key=AIzaSyBeuR3UL5jXHRmwVFO4R9NyR6A0pjOvzt0');
+        $response = $request->getBody();
+        $place = GooglePlace::create([
+            'event_id' => $eventid,
+            'name' => $venue,
+            'address' => $address,
+            'data' => $response,
+        ]);
+        $place->save();
+    }
     /**
      * Display the specified resource.
      *

@@ -28,7 +28,11 @@
             <h3>Categories</h3>
         </div>
         <div class="categories-items">
-            <a class="category-item" href="#"><i class="fas fa-music"></i>Music</a>
+            @foreach ($category as $cat)
+                <a class="category-item" href="#"><i class="fas fa-music"></i>{{ $cat->name }}</a>
+
+            @endforeach
+            {{-- <a class="category-item" href="#"><i class="fas fa-music"></i>Music</a>
             <a class="category-item" href="#"><i class="fas fa-flag"></i>Festival</a>
             <a class="category-item" href="#"><i class="fas fa-pen-nib"></i>Art</a>
             <a class="category-item" href="#"><i class="fas fa-microphone-alt"></i>Club</a>
@@ -37,6 +41,7 @@
             <a class="category-item" href="#"><i class="fas fa-video"></i>Theatre</a>
             <a class="category-item" href="#"><i class="fas fa-bullhorn"></i>Promotions</a>
             <a class="category-item" href="/category"><i class="fas fa-ellipsis-h"></i>Others</a>
+            --}}
         </div>
     </div>
     <div class="user-data full-width">
@@ -45,8 +50,7 @@
         </div>
         <div class="sugguest-user">
             <div class="sugguest-user-dt">
-                <a href="user_dashboard_activity.html"><img
-                        src="images/homepage/left-side/left-img-1.jpg" alt=""></a>
+                <a href="user_dashboard_activity.html"><img src="images/homepage/left-side/left-img-1.jpg" alt=""></a>
                 <a href="user_dashboard_activity.html">
                     <h4>Johnson</h4>
                 </a>
@@ -55,8 +59,7 @@
         </div>
         <div class="sugguest-user">
             <div class="sugguest-user-dt">
-                <a href="user_dashboard_activity.html"><img
-                        src="images/homepage/left-side/left-img-2.jpg" alt=""></a>
+                <a href="user_dashboard_activity.html"><img src="images/homepage/left-side/left-img-2.jpg" alt=""></a>
                 <a href="user_dashboard_activity.html">
                     <h4>Jassica William</h4>
                 </a>
@@ -65,8 +68,7 @@
         </div>
         <div class="sugguest-user">
             <div class="sugguest-user-dt">
-                <a href="user_dashboard_activity.html"><img
-                        src="images/homepage/left-side/left-img-3.jpg" alt=""></a>
+                <a href="user_dashboard_activity.html"><img src="images/homepage/left-side/left-img-3.jpg" alt=""></a>
                 <a href="user_dashboard_activity.html">
                     <h4>Rock</h4>
                 </a>
@@ -75,8 +77,7 @@
         </div>
         <div class="sugguest-user">
             <div class="sugguest-user-dt">
-                <a href="user_dashboard_activity.html"><img
-                        src="images/homepage/left-side/left-img-4.jpg" alt=""></a>
+                <a href="user_dashboard_activity.html"><img src="images/homepage/left-side/left-img-4.jpg" alt=""></a>
                 <a href="user_dashboard_activity.html">
                     <h4>Davil Smith</h4>
                 </a>
@@ -85,8 +86,7 @@
         </div>
         <div class="sugguest-user">
             <div class="sugguest-user-dt">
-                <a href="user_dashboard_activity.html"><img
-                        src="images/homepage/left-side/left-img-5.jpg" alt=""></a>
+                <a href="user_dashboard_activity.html"><img src="images/homepage/left-side/left-img-5.jpg" alt=""></a>
                 <a href="user_dashboard_activity.html">
                     <h4>Ricky Doe</h4>
                 </a>

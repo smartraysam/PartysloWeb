@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Djlist;
 use App\Event;
+use App\Eventimg;
 use App\Eventstat;
 use App\GooglePlace;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ApiController extends Controller
 {
@@ -14,22 +16,30 @@ class ApiController extends Controller
     public function FacebookEventAPI(Request $request)
     {
 
+        $djlist_id = array();
         $checkEvent = Event::where("title", $request->title)->first();
+        $djs = Djlist::select(["id", "name"])->get();
+        foreach ($djs as $key => $value) {
+            if (Str::contains($request->description, $value->name)) {
+                \Log::info("true");
+                array_push($djlist_id, $value->id);
+
+            }
+        }
+        if (count($djlist_id) == 0) {
+            array_push($djlist_id, 0);
+        }
 
         if ($checkEvent) {
-            $stat = Eventstat::where('event_id', $checkEvent->id)->first();
-            if ($stat != null) {
-                // \Log::info($stat);
-                $stat->maybe = $request->interested;
-                $stat->going = $request->going;
-                $stat->save();
-            }
+            $checkEvent->djlist_id = $djlist_id;
+            \Log::info("202");
             return response()->json("Event exist", 202);
         }
+
         $event = Event::create([
             'title' => $request->title,
-            'owner' => $request->owner,
-            'djlist_id' => 0,
+            'owner' => "0",
+            'djlist_id' => json_encode($djlist_id),
             'description' => $request->description,
             'ticketfee' => "Ticket Link",
             'category' => $request->category,
@@ -46,23 +56,40 @@ class ApiController extends Controller
             'organizerlink' => $request->organizerslink,
 
         ]);
-        $event->save();
-        $eventstat = Eventstat::create([
-            'event_id' => $event->id,
-            'going' => $request->going,
-            'maybe' => $request->interested,
-        ]);
-        $eventstat->save();
 
-        $place = GooglePlace::create([
-            'event_id' => $event->id,
-            'address' => $request->address,
-            'data' => $request->place,
+        $event->save();
+        $placeid = $request->address_placeid;
+        $venue = $request->venue;
+        $address = $request->address;
+        $feature_img = $request->imagelink;
+        $event_id = $event->id;
+        $eventstat = Eventstat::create([
+            'event_id' => $event_id,
         ]);
-        $place->save();
+        $eventimg = Eventimg::create([
+            'event_id' => $event_id,
+            'image' => $feature_img,
+        ]);
+        $eventimg->save();
+        $eventstat->save();
+        $this->getPlaceDetails($placeid, $event_id, $venue, $address);
+        \Log::info("200");
         return response()->json("Event added", 200);
     }
 
+    public function getPlaceDetails($placeid, $eventid, $venue, $address)
+    {
+        $client = new \GuzzleHttp\Client(['verify' => false]);
+        $request = $client->get('https://maps.googleapis.com/maps/api/place/details/json?placeid=' . $placeid . '&fields=name,rating,formatted_phone_number,icon,types,url,website,opening_hours,price_level,business_status,formatted_address&key=AIzaSyBeuR3UL5jXHRmwVFO4R9NyR6A0pjOvzt0');
+        $response = $request->getBody();
+        $place = GooglePlace::create([
+            'event_id' => $eventid,
+            'name' => $venue,
+            'address' => $address,
+            'data' => $response,
+        ]);
+        $place->save();
+    }
     public function DJListsApI(Request $request)
     {
         // \Log::info($request);
