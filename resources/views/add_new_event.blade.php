@@ -300,8 +300,7 @@
                                         <span>
                                             <p>Seperate entries with comma</p>
                                         </span>
-                                        <input class="add-inputs" type="text" name="organizerslink"
-                                            placeholder="Organizer web page">
+                            
                                     </div>
                                 </div>
                                 <div class="upload-mp">

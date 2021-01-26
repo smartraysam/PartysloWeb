@@ -11,6 +11,7 @@ use App\Location;
 use App\Notify;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
 class MobileapiController extends Controller
 {
@@ -102,6 +103,7 @@ class MobileapiController extends Controller
 
     public function getEvent(Request $request)
     {
+       \Log::info(URL::to('/'));
         $event_id = $request->id;
         $event = Event::where('events.id', '=', $event_id)
             ->join('eventstats', 'eventstats.event_id', '=', 'events.id')->first();

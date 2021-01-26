@@ -11,6 +11,7 @@ use App\GooglePlace;
 use App\Traits\UploadTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
@@ -672,12 +673,13 @@ class EventController extends Controller
                 \Log::info($feature_image);
                 $eventimg = Eventimg::create([
                     'event_id' => $eventid,
-                    'image' => env('APP_URL') . "/" . $feature_image,
+                    'image' =>URL::to('/') . "/" . $feature_image,
                 ]);
                 $eventimg->save();
             }
             $event = Event::where("id", $eventid)->first();
-            $event->image = env('APP_URL') . "/" . $feature_image;
+            $event->image =  URL::to('/') . "/" . $feature_image;
+            $event->organizerlink = URL::to('/').$event->id."/".str_slug( $event->title);
             $event->save();
         }
     }
@@ -724,9 +726,8 @@ class EventController extends Controller
             'address_latitude' => $request->address_latitude,
             'address_longitude' => $request->address_longitude,
             'image' => "https://images.pexels.com/photos/929778/pexels-photo-929778.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            'organizers' => $request->organizers,
-            'organizerlink' => $request->organizerslink,
-
+            'organizers' => "",
+        
         ]);
         $event->save();
         $address = $request->address;
