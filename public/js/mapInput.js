@@ -98,7 +98,7 @@ function initialize() {
                 lat,
                 lng
             });
-            // console.log('Lat: ${lat.toFixed(5)} Lng: ${lng.toFixed(5)}');
+            //   console.log('Lat: ${lat.toFixed(5)} Lng: ${lng.toFixed(5)}');
         },
         onError: err => {
             console.log(err.message + getPositionErrorMessage(err.code));
@@ -161,13 +161,14 @@ function initialize() {
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
             marker.setVisible(false);
             const place = autocomplete.getPlace();
+            const place_id = place.place_id;
             geocoder.geocode({
-                'placeId': place.place_id
+                'placeId': place_id
             }, function(results, status) {
                 if (status === google.maps.GeocoderStatus.OK) {
                     const lat = results[0].geometry.location.lat();
                     const lng = results[0].geometry.location.lng();
-                    setLocationCoordinates(autocomplete.key, lat, lng);
+                    setLocationCoordinates(autocomplete.key, lat, lng, place_id);
                 }
             });
 
@@ -190,9 +191,11 @@ function initialize() {
     }
 }
 
-function setLocationCoordinates(key, lat, lng) {
+function setLocationCoordinates(key, lat, lng, placeid) {
     const latitudeField = document.getElementById(key + "-" + "latitude");
     const longitudeField = document.getElementById(key + "-" + "longitude");
+    const placeidField = document.getElementById(key + "-" + "placeid");
     latitudeField.value = lat;
     longitudeField.value = lng;
+    placeidField.value = placeid;
 }

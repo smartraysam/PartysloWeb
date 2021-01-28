@@ -63,7 +63,7 @@ Route::get('/events', 'EventController@index');
 
 Route::get('/filterevents', 'EventController@eventfilter');
 
-Route::post('/save_event', 'EventController@store')->name('saveevent')->middleware('auth');
+Route::post('/save_event', 'EventController@store')->middleware('auth');
 
 
 Route::get('/buyticket', 'HomeController@buyTicket')->name('buyticket');

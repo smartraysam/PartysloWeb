@@ -8,10 +8,10 @@ use App\Event;
 use App\Eventimg;
 use App\GooglePlace;
 use App\Location;
+use App\User;
 use App\Notify;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\URL;
 
 class MobileapiController extends Controller
 {
@@ -103,7 +103,6 @@ class MobileapiController extends Controller
 
     public function getEvent(Request $request)
     {
-       \Log::info(URL::to('/'));
         $event_id = $request->id;
         $event = Event::where('events.id', '=', $event_id)
             ->join('eventstats', 'eventstats.event_id', '=', 'events.id')->first();
@@ -141,7 +140,7 @@ class MobileapiController extends Controller
                 $dj->link = "https://thedjlist.com/";
                 $dj->follower = "0";
                 $dj->genre = json_encode($genre);
-                $dj->music = "Other";
+                $dj->music = "Others";
                 $dj->social = json_encode($social);
                 $dj->location = json_encode($location);
                 array_push($djs, $dj);
@@ -167,17 +166,7 @@ class MobileapiController extends Controller
         ]);
 
     }
-    public function getLocation(Request $request)
-    {
-        $name = $request->name;
-        $address = $request->address;
-        $location = Location::where('name', 'LIKE', '%' . $name . '%')
-            ->where('address', 'LIKE', '%' . $address . '%')->first();
-        return response()->json([
-            'status' => 'OK',
-            'result' => $location,
-        ]);
-    }
+
     public function getPlace(Request $request)
     {
         $address = $request->address;
@@ -280,21 +269,21 @@ class MobileapiController extends Controller
     {
         $today = Carbon::today();
         $todayTime = Carbon::now()->format("H:i");
-        $category = Category::select("name")->get();
+        $category = Category::select("id", "name")->get();
         $country = $request->address;
         $Categorydata = array();
         $index = 0;
-
         foreach ($category as $key => $value) {
             $eventstotal = Event::where('address', 'LIKE', '%' . $country . '%')
-                ->join('djlists', 'djlists.id', '=', 'events.djlist_id')->where('genre', 'LIKE', '%' . $value->name . '%')->count();
+                ->whereDate("end_date", '>=', $today)
+                ->whereJsonContains('category', $value->name)->count();
 
             $eventsrun = Event::where('address', 'LIKE', '%' . $country . '%')
                 ->whereDate("start_date", '<=', $today)
                 ->whereDate("end_date", '>=', $today)
                 ->whereTime("start_time", '<=', $todayTime)
                 ->whereTime("end_time", '>=', $todayTime)
-                ->join('djlists', 'djlists.id', '=', 'events.djlist_id')->where('genre', 'LIKE', '%' . $value->name . '%')->count();
+                ->whereJsonContains('category', $value->name)->count();
 
             $Categorydata[$index] = $value;
             $Categorydata[$index]->running = $eventsrun;

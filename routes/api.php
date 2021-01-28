@@ -36,5 +36,4 @@ Route::get('/v1/category', 'MobileapiController@getCategory');
 Route::get('/v1/nearby', 'MobileapiController@getNearby');
 Route::get('/v1/search', 'MobileapiController@getSearch');
 
-
 Route::get('/v1/searchevent', 'MobileapiController@getSearchEvent');

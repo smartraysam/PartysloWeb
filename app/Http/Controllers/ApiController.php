@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Djlist;
 use App\Event;
 use App\Eventimg;
@@ -12,26 +13,37 @@ use Illuminate\Support\Str;
 
 class ApiController extends Controller
 {
-
     public function FacebookEventAPI(Request $request)
     {
-
         $djlist_id = array();
+        $category_list = array();
         $checkEvent = Event::where("title", $request->title)->first();
-        $djs = Djlist::select(["id", "name"])->get();
+        $djs = Djlist::select(["id", "name", "genre"])->get();
+        $category = Category::select("id", "name")->get();
         foreach ($djs as $key => $value) {
             if (Str::contains($request->description, $value->name)) {
                 \Log::info("true");
                 array_push($djlist_id, $value->id);
-
+                $genre = json_decode($value->genre);
+                $category_list = array_unique(array_merge($category_list, $genre), SORT_REGULAR);
+            }
+        }
+        foreach ($category as $key => $value) {
+            if (Str::contains($request->description, $value->name)) {
+                array_push($category_list, $value->name);
             }
         }
         if (count($djlist_id) == 0) {
             array_push($djlist_id, 0);
         }
+        if (count($category_list) == 0) {
+            array_push($category_list, "Others");
+        }
 
         if ($checkEvent) {
-            $checkEvent->djlist_id = $djlist_id;
+            $checkEvent->djlist_id = json_encode($djlist_id);
+            $checkEvent->category = json_encode($category_list);
+            $checkEvent->save();
             \Log::info("202");
             return response()->json("Event exist", 202);
         }
@@ -42,7 +54,7 @@ class ApiController extends Controller
             'djlist_id' => json_encode($djlist_id),
             'description' => $request->description,
             'ticketfee' => "Ticket Link",
-            'category' => $request->category,
+            'category' => json_encode($category_list),
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'start_time' => $request->start_time,
@@ -54,7 +66,6 @@ class ApiController extends Controller
             'image' => $request->imagelink,
             'organizers' => $request->organizers,
             'organizerlink' => $request->organizerslink,
-
         ]);
 
         $event->save();
@@ -92,7 +103,6 @@ class ApiController extends Controller
     }
     public function DJListsApI(Request $request)
     {
-        // \Log::info($request);
         $page = (object) $request->page;
         $checkDJ = Djlist::where("name", $request->name)->first();
         if ($checkDJ) {
@@ -106,7 +116,6 @@ class ApiController extends Controller
             $social = $page->social;
             $location = $page->location;
             $genre = $request->genre;
-
             $djinfo = Djlist::create([
                 'name' => $request->name,
                 'image' => $page->image,

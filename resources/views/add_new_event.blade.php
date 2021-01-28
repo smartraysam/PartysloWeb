@@ -69,10 +69,10 @@
                                 <div class="input-section-item">
                                     <div class="add-input-title">
                                         <i class="fas fa-info-circle"></i>
-                                        <h6>Event Details*</h6>
+                                        <h6>Event Date/Time*</h6>
                                     </div>
                                     <div class="add-input-items">
-                                        <div class="add-evnt-dt">
+                                        {{-- <div class="add-evnt-dt">
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="select-bg mt-20">
@@ -86,7 +86,7 @@
                                                 </div>
 
                                             </div>
-                                        </div>
+                                        </div> --}}
 
 
                                         <div class="add-evnt-dt">
@@ -235,6 +235,8 @@
                                             <input type="hidden" name="address_latitude" id="address-latitude" value="0" />
                                             <input type="hidden" name="address_longitude" id="address-longitude"
                                                 value="0" />
+                                            <input type="hidden" name="address_placeid" id="address-placeid"
+                                                value="0" />
                                         </div>
                                     </div>
                                     <div class="add-input-items" id="address-map-container"
@@ -300,7 +302,7 @@
                                         <span>
                                             <p>Seperate entries with comma</p>
                                         </span>
-                            
+
                                     </div>
                                 </div>
                                 <div class="upload-mp">

@@ -11,8 +11,10 @@ use App\GooglePlace;
 use App\Traits\UploadTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
+
+
 
 class EventController extends Controller
 {
@@ -615,7 +617,7 @@ class EventController extends Controller
                             </li>
                         </ul>
                     </div>
-                    <div class="like-comments">
+                    <div class="like-comments">9999999999999
                         <div class="left-comments">
                             <a href="#" class="like-item" title="Like">
                                 <i class="fas fa-heart"></i>
@@ -673,13 +675,13 @@ class EventController extends Controller
                 \Log::info($feature_image);
                 $eventimg = Eventimg::create([
                     'event_id' => $eventid,
-                    'image' =>URL::to('/') . "/" . $feature_image,
+                    'image' => URL::to('/') . "/" . $feature_image,
                 ]);
                 $eventimg->save();
             }
             $event = Event::where("id", $eventid)->first();
-            $event->image =  URL::to('/') . "/" . $feature_image;
-            $event->organizerlink = URL::to('/').$event->id."/".str_slug( $event->title);
+            $event->image = URL::to('/') . "/" . $feature_image;
+            $event->organizerlink = URL::to('/') . "/" . $event->id . "/" . Str::slug($event->title);
             $event->save();
         }
     }
@@ -697,26 +699,32 @@ class EventController extends Controller
         $start_date = Carbon::createFromFormat('m/d/Y', $request->startdate)->format('Y-m-d');
         $end_date = Carbon::createFromFormat('m/d/Y', $request->enddate)->format('Y-m-d');
         $djlist_id = array();
+        $category_list = array();
         $start_time = date("H:i", strtotime($request->starttime));
         $end_time = date("H:i", strtotime($request->endtime));
-        $djs = $request->djs;
+        $djs = $request->dj;
+
         $arrayDj = explode(",", $djs);
-        foreach ($arrayDJ as $key => $value) {
+        foreach ($arrayDj as $key => $value) {
             array_push($djlist_id, $value);
+            if (is_numeric($value)) {
+                $category = Djlist::where("id", $value)->first();
+                $genre = json_decode($category->genre);
+                $category_list = array_unique(array_merge($category_list, $genre), SORT_REGULAR);
+            }
         }
-       
+
         $venue = $request->venue;
-        if (count($djlist_id)==0) {
+        if (count($djlist_id) == 0) {
             array_push($djlist_id, 0);
         }
-        
         $event = Event::create([
             'title' => $request->title,
             'owner' => Auth::user()->id,
             'djlist_id' => json_encode($djlist_id),
             'description' => $request->description,
             'ticketfee' => $request->ticket,
-            'category' => $request->category,
+            'category' => json_encode($category_list),
             'start_date' => $start_date,
             'end_date' => $end_date,
             'start_time' => $start_time,
@@ -726,9 +734,10 @@ class EventController extends Controller
             'address_latitude' => $request->address_latitude,
             'address_longitude' => $request->address_longitude,
             'image' => "https://images.pexels.com/photos/929778/pexels-photo-929778.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-            'organizers' => "",
-        
+            'organizers' => $request->organizers,
+            'organizerlink' => URL::to('/'),
         ]);
+
         $event->save();
         $address = $request->address;
         $event_id = $event->id;
@@ -738,7 +747,7 @@ class EventController extends Controller
         $eventstat->save();
         $imagelink = $this->uploadImage($request, $event_id);
         $this->getPlaceDetails($placeid, $event_id, $venue, $address);
-        return redirect()->back()->with('status', 'Operation Successfully!');
+        return redirect()->back()->with('status', 'Event posted successfully!');
     }
 
     public function getPlaceDetails($placeid, $eventid, $venue, $address)
